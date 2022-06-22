@@ -1705,7 +1705,7 @@ def mainpage():
 
 ############################ END OF Expense Module-############################
 
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ Customer @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ Customer_Module @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
   customermain=Frame(tab7, relief=GROOVE, bg="#f8f8f2")
   customermain.pack(side="top", fill=BOTH)
 
@@ -2435,21 +2435,21 @@ def mainpage():
                 sql_inv_t_val=(cus_id,)
                 fbcursor.execute(sql_inv_t,sql_inv_t_val)
                 inv_ttt=fbcursor.fetchone() 
+                if inv_ttt[0] is None:
+                    dtr=0
+                else:
+                    dtr=inv_ttt[0]
+                if inv_ttt[1] is None:
+                    dtr1=0
+                else:
+                    dtr1=inv_ttt[1]
+                if inv_ttt[2] is None:
+                    dtr2=0
+                else:
+                    dtr2=inv_ttt[2]
                 pdf.drawString(28,x,"__________________________________________________________________________________")
                 if ps_cr=="before amount":
-                                        if inv_ttt[0] is None:
-                                          dtr=0
-                                        else:
-                                          dtr=inv_ttt[0]
-                                        if inv_ttt[1] is None:
-                                          dtr1=0
-                                        else:
-                                          dtr1=inv_ttt[1]
-                                        if inv_ttt[2] is None:
-                                          dtr2=0
-                                        else:
-                                          dtr2=inv_ttt[2]
-                                        
+                                       
                                         pdf.drawString(28,x-13,"")
                                   
                                         pdf.drawString(100,x-13,"")
@@ -2541,14 +2541,17 @@ def mainpage():
       add_customer.destroy()
     def cus_add_cst():
       cst_id=b1sd.get()#id
-      if cst_id==0 or None:
+      cus_bs_nm=bnm_cus.get()
+      if cst_id=="" or cus_bs_nm=="" :
             
-            pass
+        messagebox.showerror("Empty Field", "Customer ID field and Business Name field is Required!")
+
       else:
         
-        cus_bs_nm=bnm_cus.get()#bs name
+        #bs name
         # cmp_id=
-        cus_bs_ad_cus=bs_adr_cus.get()#bs ad name
+        cus_bs_ad_cus=bdfdsfsd2.get("1.0",END)#bs ad name
+        
         cus_bs_cnt=bs_cnt.get()#Contact person
         cus_bs_em=bs_em.get()#email bs
         cus_bs_tel=bs_tel.get()#bs tel
@@ -2564,7 +2567,7 @@ def mainpage():
         cus_shp_cat=cus_catg.get()# category
         cus_shp_st=cus_st.get()# status Checkbox
         cus_shp_cnt_pr=cus_sh_nam.get()#contact person
-        cus_shp_adr=cus_sh_adr.get()#contact address
+        cus_shp_adr=b2sds1.get("1.0",END)#contact address
         cus_shp_cnt=bs_sh_cnt.get()#Contact person
         cus_shp_em=bs_sh_em.get()#email bs
         cus_shp_tel=bs_sh_tel.get()#bs tel
@@ -2602,10 +2605,32 @@ def mainpage():
             
             add_customer.destroy()
           else:
-            messagebox.askyesno("Already Exists", "Customer ID value already exists. Duplicate value not allowed")
+            messagebox.showerror("Already Exists", "Customer ID value already exists. Duplicate value not allowed")
         else:
-            messagebox.askyesno("Already Exists", "Customer ID value already exists. Duplicate value not allowed")
-          
+            messagebox.showerror("Already Exists", "Business name is already exists. Duplicate value not allowed")
+    
+    def top_btn():
+        cus_bs_nm=bnm_cus.get()
+        cus_bs_ad_cus=bdfdsfsd2.get("1.0",END)#bs ad name
+        b1fr1.delete(0,'end')
+        b1fr1.insert(0,cus_bs_nm)
+        b2sds1.delete(1.0,'end')
+        b2sds1.insert(1.0,cus_bs_ad_cus)
+
+    def btm_btn():
+        cus_bs_cnt=bs_cnt.get()#Contact person
+        cus_bs_em=bs_em.get()#email bs
+        cus_bs_tel=bs_tel.get()#bs tel
+        cus_bs_fax=bs_fax.get()#bs fax
+        b141sd.insert(0,cus_bs_cnt)
+        b21vcvc1.delete(0,'end')
+        b21vcvc1.insert(0,cus_bs_em)
+        b3zx1.delete(0,'end')
+        b3zx1.insert(0,cus_bs_tel)
+        b4x141.delete(0,'end')
+        b4x141.insert(0,cus_bs_fax)
+
+
 
     add_customer = Toplevel()  
     add_customer.title("Add new Customer ")
@@ -2651,8 +2676,9 @@ def mainpage():
     # b1.config(validate='focusout', validatecommand=vcmd, invalidcommand=ivcmd)
     b1.place(x=110,y=10,width=210)
 
-    b2=Entry(Labelframe2, textvariable=bs_adr_cus).place(x=110,y=35,width=210,height=63)  
-    btn110=Button(Labelframe1,width=3,height=2,compound = LEFT,text=">>").place(x=359,y=85,height=20)
+    bdfdsfsd2=scrolledtext.ScrolledText(Labelframe2)
+    bdfdsfsd2.place(x=110,y=35,width=210,height=63)  
+    btn110=Button(Labelframe1,width=3,height=2,compound = LEFT,text=">>", command=lambda:top_btn()).place(x=359,y=85,height=20)
 
 
     Labelframe3=LabelFrame(Labelframe1,text="Ship to (appears on invoice)")
@@ -2661,8 +2687,10 @@ def mainpage():
     a21=Label(Labelframe3,text="Address:").place(x=10,y=35)
     cus_sh_nam=StringVar()
     cus_sh_adr=StringVar()
-    b11=Entry(Labelframe3, textvariable=cus_sh_nam).place(x=110,y=10,width=210)
-    b21=Entry(Labelframe3, textvariable=cus_sh_adr).place(x=110,y=35,width=210,height=63)
+    b1fr1=Entry(Labelframe3, textvariable=cus_sh_nam)
+    b1fr1.place(x=110,y=10,width=210)
+    b2sds1=scrolledtext.ScrolledText(Labelframe3)
+    b2sds1.place(x=110,y=35,width=210,height=63)
 
 
     Labelframe4=LabelFrame(Labelframe1,text="Contact")
@@ -2716,7 +2744,7 @@ def mainpage():
           :param value:
           :return:
           """
-          pattern = r'^[0-9]\d{0-12}$'
+          pattern = r'^[0-9]\d{9,10}$'
           if re.fullmatch(pattern, value) is None:
               
               return False
@@ -2778,7 +2806,7 @@ def mainpage():
     iv_tel_cmdb51 = (Labelframe2.register(on_invalid_telb51),)
     b51.config(validate='focusout', validatecommand=v_tel_cmdb51, invalidcommand=iv_tel_cmdb51)
     b51.place(x=215,y=85,width=105)
-    btn111=Button(Labelframe1,width=3,height=2,compound = LEFT,text=">>").place(x=359,y=220,height=20)
+    btn111=Button(Labelframe1,width=3,height=2,compound = LEFT,text=">>", command=lambda:btm_btn()).place(x=359,y=220,height=20)
 
     bs_sh_cnt=StringVar()
     bs_sh_em=StringVar()
@@ -2791,10 +2819,11 @@ def mainpage():
     a21=Label(Labelframe5,text="Email Address:").place(x=10,y=35)
     a31=Label(Labelframe5,text="Tel. No:").place(x=10,y=60)
     a41=Label(Labelframe5,text="Fax:").place(x=200,y=60)
-
-    b11=Entry(Labelframe5, textvariable=bs_sh_cnt).place(x=110,y=10,width=210)
+  
+    b141sd=Entry(Labelframe5, textvariable=bs_sh_cnt)
+    b141sd.place(x=110,y=10,width=210)
     
-    b211=Entry(Labelframe5,textvariable=bs_sh_em)
+    b21vcvc1=Entry(Labelframe5,textvariable=bs_sh_em)
     def validateb211(value):
           
           """
@@ -2807,19 +2836,19 @@ def mainpage():
               
               return False
 
-          b211.config(fg="black")
+          b21vcvc1.config(fg="black")
           return True
 
     def on_invalidb211():
-          b211.config(fg="red")
+          b21vcvc1.config(fg="red")
           
     vcmdb211 = (Labelframe2.register(validateb211), '%P')
     ivcmdb211 = (Labelframe2.register(on_invalidb211),)
 
-    b211.config(validate='focusout', validatecommand=vcmdb211, invalidcommand=ivcmdb211)
-    b211.place(x=110,y=35,width=210)
+    b21vcvc1.config(validate='focusout', validatecommand=vcmdb211, invalidcommand=ivcmdb211)
+    b21vcvc1.place(x=110,y=35,width=210)
     
-    b31=Entry(Labelframe5,textvariable=bs_sh_tel)
+    b3zx1=Entry(Labelframe5,textvariable=bs_sh_tel)
     def validate_telb31(value):
           
           """
@@ -2827,22 +2856,22 @@ def mainpage():
           :param value:
           :return:
           """
-          pattern = r'^[0-9]\d{9}$'
+          pattern = r'^[0-9]\d{9,10}$'
           if re.fullmatch(pattern, value) is None:
               
               return False
-          b31.config(fg="black")
+          b3zx1.config(fg="black")
           return True
 
     def on_invalid_telb31():
-          b31.config(fg="red")
+          b3zx1.config(fg="red")
           
     v_tel_cmdb31 = (Labelframe2.register(validate_telb31), '%P')
     iv_tel_cmdb31 = (Labelframe2.register(on_invalid_telb31),)
-    b31.config(validate='focusout', validatecommand=v_tel_cmdb31, invalidcommand=iv_tel_cmdb31)
-    b31.place(x=110,y=60,width=90)
+    b3zx1.config(validate='focusout', validatecommand=v_tel_cmdb31, invalidcommand=iv_tel_cmdb31)
+    b3zx1.place(x=110,y=60,width=90)
 
-    b4141=Entry(Labelframe5,textvariable=bs_sh_fax)
+    b4x141=Entry(Labelframe5,textvariable=bs_sh_fax)
     def validate_telb4141(value):
           
           """
@@ -2854,16 +2883,16 @@ def mainpage():
           if re.fullmatch(pattern, value) is None:
               
               return False
-          b4141.config(fg="black")
+          b4x141.config(fg="black")
           return True
 
     def on_invalid_telb4141():
-          b4141.config(fg="red")
+          b4x141.config(fg="red")
           
     v_tel_cmdb4141 = (Labelframe2.register(validate_telb4141), '%P')
     iv_tel_cmdb4141 = (Labelframe2.register(on_invalid_telb4141),)
-    b4141.config(validate='focusout', validatecommand=v_tel_cmdb4141, invalidcommand=iv_tel_cmdb4141)
-    b4141.place(x=230,y=60,width=90)
+    b4x141.config(validate='focusout', validatecommand=v_tel_cmdb4141, invalidcommand=iv_tel_cmdb4141)
+    b4x141.place(x=230,y=60,width=90)
 
 
     Labelframe6=LabelFrame(Labelframe1,text="Payment Option")
@@ -2969,7 +2998,7 @@ def mainpage():
   def cus_edit_customer():
     try:
       cus_id=cus_main_tree.item(cus_main_tree.focus())["values"][1]
-      print(cus_id)
+      
       cus_ed_tbles="select * from customer where customerno=%s"
       cus_ed_tbles_valuz=(cus_id,)
       fbcursor.execute(cus_ed_tbles,cus_ed_tbles_valuz)
@@ -2979,53 +3008,82 @@ def mainpage():
         edit_customer.destroy()
 
       def cus_edit_cst():
-      
-        cst_id=b1s.get()#id
+        
+              cst_id=b1s.get()#id
+            
+              cus_bs_nm=bnm_cus.get()#bs name
+
+              cus_bs_ad_cus=bnjh2.get('1.0',END)#bs ad name
+              cus_bs_cnt=bs_cnt.get()#Contact person
+              cus_bs_em=bs_em.get()#email bs
+              cus_bs_tel=bs_tel.get()#bs tel
+              cus_bs_fax=bs_fax.get()#bs fax
+              cus_bs_mob=bs_mobi.get()#bs mob
+              cus_bs_pymcheck=cus_ds_chk.get()# discount checkboc
+              cus_bs_spc_tax=cus_sp_tx.get()# specific tax
+              cus_bs_spc_tax2=cus_sp_tx2.get()
+              cus_bs_dis=cus_sp_disc.get()# discount
+              cus_bs_ctr=bs_cus_ct.get()# customer category
+
+              # ship 
+              cus_shp_cat=cus_catg.get()# category
+              cus_shp_st=cus_st.get()# status Checkbox
+              cus_shp_cnt_pr=cus_sh_nam.get()#contact person
+              cus_shp_adr=b2vxcvcxbc1.get("1.0",END)#contact address
+              cus_shp_cnt=bs_sh_cnt.get()#Contact person
+              cus_shp_em=bs_sh_em.get()#email bs
+              cus_shp_tel=bs_sh_tel.get()#bs tel
+              cus_shp_fax=bs_sh_fax.get()#bs fax
+              cus_shp_cntry=cus_sh_coun.get()#contry
+              cus_shp_city=cus_sh_cty.get()#city
+              cus_shp_ntre=cfgd.get("1.0", END) 
+              
+              cus_ed_tbless="select businessname from customer where businessname=%s"
+              cus_ed_tbless_valuz=(cus_bs_nm,)
+              fbcursor.execute(cus_ed_tbless,cus_ed_tbless_valuz)
+              cus_ins_valse=fbcursor.fetchone()
+            
+              cus_tbl_edit="update customer set customerno=%s,category=%s,status=%s,businessname=%s,businessaddress=%s,shipname=%s,shipaddress=%s,contactperson=%s,cpemail=%s,cptelno=%s,cpfax=%s,cpmobileforsms=%s,shipcontactperson=%s,shipcpemail=%s,shipcptelno=%s,shipcpfax=%s,taxexempt=%s,specifictax1=%s,discount=%s,country=%s,city=%s,customertype=%s,notes=%s, specifictax2=%s where customerno = %s" #adding values into db
+              cus_tbl_edit_val=(cst_id,cus_shp_cat,cus_shp_st,cus_bs_nm,cus_bs_ad_cus,cus_shp_cnt_pr,cus_shp_adr,cus_bs_cnt,cus_bs_em,cus_bs_tel,cus_bs_fax,cus_bs_mob,cus_shp_cnt,cus_shp_em,cus_shp_tel,cus_shp_fax,cus_bs_pymcheck,cus_bs_spc_tax,cus_bs_dis,cus_shp_cntry,cus_shp_city,cus_bs_ctr,cus_shp_ntre,cus_bs_spc_tax2,cus_id,)
+              fbcursor.execute(cus_tbl_edit,cus_tbl_edit_val)
+              fbilldb.commit()
+              cus_main_s=ttk.Style()
+              for record in cus_main_tree.get_children():
+                cus_main_tree.delete(record)
+              cus_main_table_sql="select * from customer"
+              fbcursor.execute(cus_main_table_sql)
+              main_tb_val=fbcursor.fetchall()
+              count_cus=0
+
+              for i in main_tb_val:
+                cus_main_tree.insert(parent='', index='end', iid=count_cus, text='hello', values=("",i[24],i[2],i[4],i[8],i[10],i[12],i[22]))
+                count_cus +=1
+              edit_customer.destroy()
+                 
+
+      def top_SHP_btn():
         cus_bs_nm=bnm_cus.get()#bs name
         # cmp_id=
-        cus_bs_ad_cus=bs_adr_cus.get()#bs ad name
-        cus_bs_cnt=bs_cnt.get()#Contact person
-        cus_bs_em=bs_em.get()#email bs
-        cus_bs_tel=bs_tel.get()#bs tel
-        cus_bs_fax=bs_fax.get()#bs fax
-        cus_bs_mob=bs_mobi.get()#bs mob
-        cus_bs_pymcheck=cus_ds_chk.get()# discount checkboc
-        cus_bs_spc_tax=cus_sp_tx.get()# specific tax
-        cus_bs_spc_tax2=cus_sp_tx2.get()
-        cus_bs_dis=cus_sp_disc.get()# discount
-        cus_bs_ctr=bs_cus_ct.get()# customer category
+        cus_bs_ad_cus=bnjh2.get("1.0",END)#bs ad name
+        b1fdgfg1.delete(0,'end')
+        b1fdgfg1.insert(0,cus_bs_nm)
+        b2vxcvcxbc1.delete(1.0,'end')
+        b2vxcvcxbc1.insert(1.0,cus_bs_ad_cus)
 
-        # ship 
-        cus_shp_cat=cus_catg.get()# category
-        cus_shp_st=cus_st.get()# status Checkbox
-        cus_shp_cnt_pr=cus_sh_nam.get()#contact person
-        cus_shp_adr=cus_sh_adr.get()#contact address
-        cus_shp_cnt=bs_sh_cnt.get()#Contact person
-        cus_shp_em=bs_sh_em.get()#email bs
-        cus_shp_tel=bs_sh_tel.get()#bs tel
-        cus_shp_fax=bs_sh_fax.get()#bs fax
-        cus_shp_cntry=cus_sh_coun.get()#contry
-        cus_shp_city=cus_sh_cty.get()#city
-        cus_shp_ntre=cfgd.get("1.0", END)
-        print(cus_shp_ntre)
-
-        cus_tbl_edit="update customer set customerno=%s,category=%s,status=%s,businessname=%s,businessaddress=%s,shipname=%s,shipaddress=%s,contactperson=%s,cpemail=%s,cptelno=%s,cpfax=%s,cpmobileforsms=%s,shipcontactperson=%s,shipcpemail=%s,shipcptelno=%s,shipcpfax=%s,taxexempt=%s,specifictax1=%s,discount=%s,country=%s,city=%s,customertype=%s,notes=%s, specifictax2=%s where customerno = %s" #adding values into db
-        cus_tbl_edit_val=(cst_id,cus_shp_cat,cus_shp_st,cus_bs_nm,cus_bs_ad_cus,cus_shp_cnt_pr,cus_shp_adr,cus_bs_cnt,cus_bs_em,cus_bs_tel,cus_bs_fax,cus_bs_mob,cus_shp_cnt,cus_shp_em,cus_shp_tel,cus_shp_fax,cus_bs_pymcheck,cus_bs_spc_tax,cus_bs_dis,cus_shp_cntry,cus_shp_city,cus_bs_ctr,cus_shp_ntre,cus_bs_spc_tax2,cus_id,)
-        fbcursor.execute(cus_tbl_edit,cus_tbl_edit_val)
-        fbilldb.commit()
-        cus_main_s=ttk.Style()
-        for record in cus_main_tree.get_children():
-          cus_main_tree.delete(record)
-        cus_main_table_sql="select * from customer"
-        fbcursor.execute(cus_main_table_sql)
-        main_tb_val=fbcursor.fetchall()
-        count_cus=0
-
-        for i in main_tb_val:
-          cus_main_tree.insert(parent='', index='end', iid=count_cus, text='hello', values=("",i[24],i[2],i[4],i[8],i[10],i[12],i[22]))
-          count_cus +=1
-        edit_customer.destroy()
-
+      def btm_shp_btn():
+          
+          cus_bs_cnt=bs_cnt.get()#Contact person
+          cus_bs_em=bs_em.get()#email bs
+          cus_bs_tel=bs_tel.get()#bs tel
+          cus_bs_fax=bs_fax.get()#bs fax
+          b1dsf1.delete(0,'end')
+          b1dsf1.insert(0,cus_bs_cnt)
+          b21cd1.delete(0,'end')
+          b21cd1.insert(0,cus_bs_em)
+          b311.delete(0,'end')
+          b311.insert(0,cus_bs_tel)
+          b414.delete(0,'end')
+          b414.insert(0,cus_bs_fax)
       edit_customer = Toplevel()  
       edit_customer.title("Add new Customer ")
       p2 = PhotoImage(file = "images/fbicon.png")
@@ -3039,8 +3097,9 @@ def mainpage():
       a3.place(x=620,y=7)
     
       b1s=Entry(Labelframe1)
-      print(cus_ins_val[24])
+      
       b1s.insert(0,cus_ins_val[24])
+      b1s.config(state=DISABLED,disabledbackground="white",disabledforeground="black")
       cus_catg=StringVar() 
       b2=ttk.Combobox(Labelframe1,textvariable = cus_catg) 
       sql_cust_dt='SELECT DISTINCT category from customer'
@@ -3070,12 +3129,12 @@ def mainpage():
       b1=Entry(Labelframe2, textvariable=bnm_cus)
       b1.insert(0,cus_ins_val[4])
       b1.place(x=110,y=10,width=210)
-      b2=Entry(Labelframe2, textvariable=bs_adr_cus) 
+      bnjh2=scrolledtext.ScrolledText(Labelframe2) 
       
-      b2.insert(0,cus_ins_val[5])
-      b2.place(x=110,y=35,width=210,height=63) 
+      bnjh2.insert(1.0,cus_ins_val[5])
+      bnjh2.place(x=110,y=35,width=210,height=63) 
       # b1.place(x=359,y=85,height=20)
-      btn110=Button(Labelframe1,width=3,height=2,compound = LEFT,text=">>")
+      btn110=Button(Labelframe1,width=3,height=2,compound = LEFT,text=">>", command=lambda:top_SHP_btn()).place(x=359,y=85,height=20)
 
 
       Labelframe3=LabelFrame(Labelframe1,text="Ship to (appears on invoice)")
@@ -3084,13 +3143,13 @@ def mainpage():
       a21=Label(Labelframe3,text="Address:").place(x=10,y=35)
       cus_sh_nam=StringVar()
       cus_sh_adr=StringVar()
-      b11=Entry(Labelframe3, textvariable=cus_sh_nam)
-      b11.insert(0,str(cus_ins_val[6]))
-      b11.place(x=110,y=10,width=210)
-      b21=Entry(Labelframe3, textvariable=cus_sh_adr)
-      b21.delete(0,'end')
-      b21.insert(0,str(cus_ins_val[7]))
-      b21.place(x=110,y=35,width=210,height=63)
+      b1fdgfg1=Entry(Labelframe3, textvariable=cus_sh_nam)
+      b1fdgfg1.insert(0,str(cus_ins_val[6]))
+      b1fdgfg1.place(x=110,y=10,width=210)
+      b2vxcvcxbc1=scrolledtext.ScrolledText(Labelframe3)
+      b2vxcvcxbc1.delete(1.0,'end')
+      b2vxcvcxbc1.insert(1.0,str(cus_ins_val[7]))
+      b2vxcvcxbc1.place(x=110,y=35,width=210,height=63)
       
 
 
@@ -3146,7 +3205,7 @@ def mainpage():
             :param value:
             :return:
             """
-            pattern = r'^[0-9]\d{9}$'
+            pattern = r'^[0-9]\d{9,10}$'
             if re.fullmatch(pattern, value) is None:
                 return False
                 
@@ -3213,7 +3272,8 @@ def mainpage():
       b5fd1.config(validate='focusout', validatecommand=v_tel_cmd3, invalidcommand=iv_tel_cmd3)
      
       b5fd1.place(x=215,y=85,width=105)
-      btn111=Button(Labelframe1,width=3,height=2,compound = LEFT,text=">>").place(x=359,y=220,height=20)
+      btn111=Button(Labelframe1,width=3,height=2,compound = LEFT,text=">>",command=lambda:btm_shp_btn())
+      btn111.place(x=359,y=220,height=20)
     
       bs_sh_cnt=StringVar()
       bs_sh_em=StringVar()
@@ -3226,11 +3286,11 @@ def mainpage():
       a21=Label(Labelframe5,text="Email Address:").place(x=10,y=35)
       a31=Label(Labelframe5,text="Tel. No:").place(x=10,y=60)
       a41=Label(Labelframe5,text="Fax:").place(x=200,y=60)
-
-      b11=Entry(Labelframe5, textvariable=bs_sh_cnt)
-      b11.insert(0,str(cus_ins_val[13]))
-      b11.place(x=110,y=10,width=210)
-      b211=Entry(Labelframe5,textvariable=bs_sh_em)
+      
+      b1dsf1=Entry(Labelframe5, textvariable=bs_sh_cnt)
+      b1dsf1.insert(0,str(cus_ins_val[13]))
+      b1dsf1.place(x=110,y=10,width=210)
+      b21cd1=Entry(Labelframe5,textvariable=bs_sh_em)
       
 
       def validateb21(value):
@@ -3246,18 +3306,18 @@ def mainpage():
                 return False
 
           
-            b211.config(fg="black")
+            b21cd1.config(fg="black")
             return True
 
       def on_invalidb21():
-            b211.config(fg="red")
+            b21cd1.config(fg="red")
             
       vcmdb21 = (Labelframe5.register(validateb21), '%P')
       ivcmdb21 = (Labelframe5.register(on_invalidb21),)
       
-      b211.config(validate='focusout', validatecommand=vcmdb21, invalidcommand=ivcmdb21)
-      b211.insert(0,str(cus_ins_val[14]))
-      b211.place(x=110,y=35,width=210)
+      b21cd1.config(validate='focusout', validatecommand=vcmdb21, invalidcommand=ivcmdb21)
+      b21cd1.insert(0,str(cus_ins_val[14]))
+      b21cd1.place(x=110,y=35,width=210)
       b311=Entry(Labelframe5,textvariable=bs_sh_tel)
       def validate_telb311(value):
             
@@ -3266,7 +3326,7 @@ def mainpage():
             :param value:
             :return:
             """
-            pattern = r'^[0-9]\d{9}$'
+            pattern = r'^[0-9]\d{9,10}$'
             if re.fullmatch(pattern, value) is None:
                 return False
                 
@@ -3430,10 +3490,10 @@ def mainpage():
     except:
       pass
   #-----------------------------------------------------------------------------------Delete Customer
-  def cus_delete_customer():
+  def cus_delete_customer(): 
     try:
       cus_id=cus_main_tree.item(cus_main_tree.focus())["values"][1]
-      print(cus_id)
+      
       
       messagebox.askyesno("Delete Customers", "Are you sure want to delete 1 Customer(s) ?")
       sql_qr="DELETE FROM customer WHERE customerno=%s"
@@ -3598,20 +3658,19 @@ def mainpage():
       sql_inv_t_val=(cus_id,)
       fbcursor.execute(sql_inv_t,sql_inv_t_val)
       inv_ttt=fbcursor.fetchone() 
-      
-      if ps_cr=="before amount":
-        if inv_ttt[0] is None:
+      if inv_ttt[0] is None:
           dtr=0
-        else:
+      else:
           dtr=inv_ttt[0]
-        if inv_ttt[1] is None:
+      if inv_ttt[1] is None:
           dtr1=0
-        else:
+      else:
           dtr1=inv_ttt[1]
-        if inv_ttt[2] is None:
+      if inv_ttt[2] is None:
           dtr2=0
-        else:
-          dtr2=inv_ttt[2]
+      else:
+        dtr2=inv_ttt[2]
+      if ps_cr=="before amount":
         cus_prv_tree.insert('', 'end',text="1",values=('-Summary-','','','','',crc+str(dtr),crc+str(dtr1),crc+str(dtr2)))
       elif ps_cr=="after amount":
         cus_prv_tree.insert('', 'end',text="1",values=('-Summary-','','','','',str(dtr)+crc,str(dtr1)+crc,str(dtr2)+crc))
@@ -3828,20 +3887,21 @@ def mainpage():
           sql_inv_t_val=(cus_id,)
           fbcursor.execute(sql_inv_t,sql_inv_t_val)
           inv_ttt=fbcursor.fetchone() 
+          if inv_ttt[0] is None:
+            dtr=0
+          else:
+            dtr=inv_ttt[0]
+          if inv_ttt[1] is None:
+            dtr1=0
+          else:
+            dtr1=inv_ttt[1]
+          if inv_ttt[2] is None:
+            dtr2=0
+          else:
+            dtr2=inv_ttt[2]
           pdf.drawString(28,x,"__________________________________________________________________________________")
           if ps_cr=="before amount":
-                                if inv_ttt[0] is None:
-                                  dtr=0
-                                else:
-                                  dtr=inv_ttt[0]
-                                if inv_ttt[1] is None:
-                                  dtr1=0
-                                else:
-                                  dtr1=inv_ttt[1]
-                                if inv_ttt[2] is None:
-                                  dtr2=0
-                                else:
-                                  dtr2=inv_ttt[2]
+                                
                                 
                                 pdf.drawString(28,x-13,"")
                           
@@ -3853,7 +3913,7 @@ def mainpage():
                                 pdf.drawString(455,x-13,str(crc)+str(dtr1))
                                 pdf.drawString(517,x-13,str(crc)+str(dtr2))
           elif ps_cr=="after amount":
-                              
+                      
                                 pdf.drawString(28,x-13,"")
                                 pdf.drawString(100,x-13,"")
                                 pdf.drawString(168,x-13,"-Summary-")
@@ -4499,7 +4559,7 @@ def mainpage():
   #-----------------------------------------------------------------------------------Search Customer
   def cus_search_customers():
       def find_cus_row():
-        print(find_txt_var.get())
+       
         if find_txt_var.get()=="Customer name":
           fnd_sql="select * from customer where businessname=%s"
           fnd_sql_val=(fnd_srh_txt.get(),)

@@ -9,6 +9,7 @@ from sqlite3 import enable_callback_tracebacks
 from tkinter import *
 from tkinter import messagebox
 from tkinter import ttk
+from textwrap import wrap
 from tkinter import font
 from tkinter.font import BOLD
 from urllib.parse import parse_qs
@@ -365,8 +366,9 @@ invset_ver.place(x=619,y=40)
 invset_messagelbframe=LabelFrame(Invoice_setting_frame_cpy,text="Predefined terms and conditions text for Invoice", height=100, width=980)
 invset_messagelbframe.place(x=248, y=400)
 
-invset_txt = scrolledtext.ScrolledText(Invoice_setting_frame_cpy, undo=True,width=115,height=4)
-invset_txt.place(x=260,y=425)
+inv_txt = scrolledtext.ScrolledText(Invoice_setting_frame_cpy, undo=True,width=115,height=4)
+inv_txt.insert(1.0,"Invoices are payable on receipt unless other terms, negotiated and noted on the invoice. By accepting delivery of goods, Buyer agrees to pay the invoiced cost for those goods, and agrees to be bound to these contract terms. No acceptance may vary these terms unless specifically agreed in writing by Seller.")
+inv_txt.place(x=260,y=425)
 
 inv_rst_btn = Button(Invoice_setting_frame_cpy,text="Restore defaults")
 inv_rst_btn.place(x=32,y=450)
@@ -406,19 +408,19 @@ def styl_can_def(event):
         except:
           inv_pro1_canvas.create_text(285, 110, text="Your Company Logo", fill="black", font=('Helvetica 18 bold'))
         
-        lb_inv1=Label(inv_pro1_canvas,text="Invoice#", bg="white",anchor="nw",font=("Helvetica", 11))
+        lb_inv1=Label(inv_pro1_canvas,text=inv_lst_bx2.get(1.0, END), bg="white",anchor="nw",font=("Helvetica", 11),height=1)#Invoice#
         win_inv1 = inv_pro1_canvas.create_window(175, 150, anchor="nw", window=lb_inv1)
 
-        lb_inv1=Label(inv_pro1_canvas,text="Invoicedate", bg="white",anchor="nw",font=("Helvetica", 11), )
+        lb_inv1=Label(inv_pro1_canvas,text=inv_lst_bx3.get(1.0,END), bg="white",anchor="nw",font=("Helvetica", 11),height=1 )#Invoicedate
         win_inv1 = inv_pro1_canvas.create_window(175, 170, anchor="nw", window=lb_inv1)
         
-        lb_inv1=Label(inv_pro1_canvas,text="Due date", bg="white",anchor="nw",font=("Helvetica", 11))
+        lb_inv1=Label(inv_pro1_canvas,text="Due date", bg="white",anchor="nw",font=("Helvetica", 11),height=1)#Due date
         win_inv1 = inv_pro1_canvas.create_window(175, 190, anchor="nw", window=lb_inv1)
 
-        lb_inv1=Label(inv_pro1_canvas,text="Terms", bg="white",anchor="nw",font=("Helvetica", 11))
+        lb_inv1=Label(inv_pro1_canvas,text=inv_lst_bx5.get(1.0,END), bg="white",anchor="nw",font=("Helvetica", 11),height=1)#Terms
         win_inv1 = inv_pro1_canvas.create_window(175, 210, anchor="nw", window=lb_inv1)
 
-        lb_inv1=Label(inv_pro1_canvas,text="Invoice ref.#", bg="white",anchor="nw",font=("Helvetica", ))
+        lb_inv1=Label(inv_pro1_canvas,text=inv_lst_bx4.get(1.0,END), bg="white",anchor="nw",font=("Helvetica", ),height=1)#Invoice ref.#
         win_inv1 = inv_pro1_canvas.create_window(175, 230, anchor="nw", window=lb_inv1)
 
         inv_pro1_canvas.create_text(350, 150, text="INV1/2022",justify=LEFT, fill="black", font=('Helvetica 11'))
@@ -435,16 +437,16 @@ def styl_can_def(event):
         
         inv_pro1_canvas.create_text(745, 185, text=cmpy_dtl[4], fill="black", font=('Helvetica 10'))
 
-        lb_inv1=Label(inv_pro1_canvas,text="Invoice", bg="white",anchor="e",font=('Helvetica 14 bold'))
+        lb_inv1=Label(inv_pro1_canvas,text=inv_lst_bx1.get(1.0,END), bg="white",anchor="e",font=('Helvetica 14 bold'),height=1)#invoice
         win_inv1 = inv_pro1_canvas.create_window(725, 200, anchor="nw", window=lb_inv1)
 
-        lb_inv1=Label(inv_pro1_canvas,text="TAX EXEMPTED", bg="white",anchor="e",font=("Helvetica 10" ))
+        lb_inv1=Label(inv_pro1_canvas,text=inv_lst_bx22.get(1.0,END), bg="white",anchor="e",font=("Helvetica 10" ),height=1)#TAX EXEMPTED
         win_inv1 = inv_pro1_canvas.create_window(695, 225, anchor="nw", window=lb_inv1)
 
-        lb_inv1=Label(inv_pro1_canvas,text="Invoice to", bg="white",anchor="nw",font=("Helvetica 10 underline" ))
+        lb_inv1=Label(inv_pro1_canvas,text=inv_lst_bx6.get(1.0,END), bg="white",anchor="nw",font=("Helvetica 10 underline" ),height=1)#Invoice to
         win_inv1 = inv_pro1_canvas.create_window(175, 250, anchor="nw", window=lb_inv1)
 
-        lb_inv1=Label(inv_pro1_canvas,text="Ship to", bg="white",anchor="nw",font=("Helvetica 10 underline"))
+        lb_inv1=Label(inv_pro1_canvas,text=inv_lst_bx7.get(1.0,END), bg="white",anchor="nw",font=("Helvetica 10 underline"),height=1)#Ship to
         win_inv1 = inv_pro1_canvas.create_window(525, 250, anchor="nw", window=lb_inv1)
 
         
@@ -467,17 +469,20 @@ def styl_can_def(event):
         tree=ttk.Treeview(inv_pro1_canvas, column=("c1", "c2","c3", "c4", "c5"), show='headings',height= 0, style='mystyle.Treeview')
 
         tree.column("# 1", anchor=E, stretch=NO, width=100)
-        tree.heading("# 1", text="ID/SKU")
+        tree.heading("# 1", text=inv_lst_bx8.get(1.0,END))#"ID/SKU"
         tree.column("# 2", anchor=E, stretch=NO, width=350)
-        tree.heading("# 2", text="Product/Service - Description")
+        tree.heading("# 2", text=inv_lst_bx9.get(1.0,END))#Product/Service - Description
         tree.column("# 3", anchor=E, stretch=NO, width=80)
-        tree.heading("# 3", text="Quantity")
+        tree.heading("# 3", text=inv_lst_bx10.get(1.0,END))#"Quantity"
         tree.column("# 4", anchor=E, stretch=NO, width=90)
-        tree.heading("# 4", text="Unit Price")
+        tree.heading("# 4", text=inv_lst_bx10.get(1.0,END))#"Unit Price"
         tree.column("# 5", anchor=E, stretch=NO, width=80)
-        tree.heading("# 5", text="Price")
+        tree.heading("# 5", text=inv_lst_bx13.get(1.0,END))#"Price"
         
         window = inv_pro1_canvas.create_window(120, 340, anchor="nw", window=tree)
+        squl_qry='select * from company'
+        fbcursor.execute(squl_qry)
+        cmpy_tax=fbcursor.fetchone()
 
         inv_pro1_canvas.create_line(120, 390, 820, 390 )
         inv_pro1_canvas.create_line(120, 340, 120, 365 )
@@ -499,52 +504,165 @@ def styl_can_def(event):
         inv_pro1_canvas.create_text(610, 372, text="1", fill="black", font=('Helvetica 10'))
         inv_pro1_canvas.create_text(710, 372, text="$200.00", fill="black", font=('Helvetica 10'))
         inv_pro1_canvas.create_text(790, 372, text="$200.00", fill="black", font=('Helvetica 10'))
-        
+          
 
-        lbx_inv=Label(inv_pro1_canvas,text="Subtotal", bg="white",anchor="nw",font=("Helvetica 10 underline"))
-        win_inv2 = inv_pro1_canvas.create_window(635,395, anchor="nw", window=lbx_inv)
+        lbx_inv=Label(inv_pro1_canvas,text=inv_lst_bx14.get(1.0,END), bg="white",anchor="nw",font=("Helvetica 10"),height=1)#"Subtotal"
+        win_inv2 = inv_pro1_canvas.create_window(630,392, anchor="nw", window=lbx_inv)
 
-        lbx_inv=Label(inv_pro1_canvas,text="TAX1", bg="white",anchor="nw",font=("Helvetica 10 underline"))
-        win_inv2 = inv_pro1_canvas.create_window(635,395, anchor="nw", window=lbx_inv)
+        lbx_inv=Label(inv_pro1_canvas,text=inv_lst_bx17.get(1.0,END), bg="white",anchor="nw",font=("Helvetica 10 "),height=1)#"TAX1"
+        win_inv2 = inv_pro1_canvas.create_window(635,418, anchor="nw", window=lbx_inv)
 
-        lbx_inv=Label(inv_pro1_canvas,text="Total Paid", bg="white",anchor="nw",font=("Helvetica 10 underline"))
-        win_inv2 = inv_pro1_canvas.create_window(635,395, anchor="nw", window=lbx_inv)
+        lbx_inv=Label(inv_pro1_canvas,text=inv_lst_bx19.get(1.0,END), bg="White",anchor="nw",font=("Helvetica 10 "), height=1)#"Total Paid"
+        win_inv2 = inv_pro1_canvas.create_window(630, 492,anchor="nw", window=lbx_inv)
 
-        lbx_inv=Label(inv_pro1_canvas,text="Balance", bg="white",anchor="nw",font=("Helvetica 10 underline"))
-        win_inv2 = inv_pro1_canvas.create_window(635,395, anchor="nw", window=lbx_inv)
-        lbx_inv=Label(inv_pro1_canvas,text="Total Paid", bg="white",anchor="nw",font=("Helvetica 10 underline"))
-        win_inv2 = inv_pro1_canvas.create_window(635,395, anchor="nw", window=lbx_inv)
+        lbx_inv=Label(inv_pro1_canvas,text=inv_lst_bx20.get(1.0,END), bg="white",anchor="nw",font=("Helvetica 10 "),height=1)#"Balance"
+        win_inv2 = inv_pro1_canvas.create_window(635, 518, anchor="nw", window=lbx_inv)
+          
 
-        # inv_pro1_canvas.create_text(650, 404, text="Subtotal", fill="black", font=('Helvetica 10'))
+       
         inv_pro1_canvas.create_text(790, 404, text="$200.00", fill="black", font=('Helvetica 10'))
-
-        inv_pro1_canvas.create_text(650, 428, text="TAX1", fill="black", font=('Helvetica 10'))
         inv_pro1_canvas.create_text(792, 428, text="$18.00", fill="black", font=('Helvetica 10'))
-
         inv_pro1_canvas.create_text(650, 454, text="Shipping and handling", fill="black", font=('Helvetica 10'))
         inv_pro1_canvas.create_text(792, 454, text="$20.00", fill="black", font=('Helvetica 10'))
-
         inv_pro1_canvas.create_text(790, 479, text="$238.00", fill="black", font=('Helvetica 10 bold'))
         inv_pro1_canvas.create_text(650, 479, text="Estimate total", fill="black", font=('Helvetica 10 bold'))
-
         inv_pro1_canvas.create_text(790, 502, text="$100.00", fill="black", font=('Helvetica 10'))
-        inv_pro1_canvas.create_text(650, 502, text="Total Paid", fill="black", font=('Helvetica 10'))
-
         inv_pro1_canvas.create_text(790, 526, text="$138.00", fill="black", font=('Helvetica 10'))
-        inv_pro1_canvas.create_text(650, 526, text="Balance", fill="black", font=('Helvetica 10'))
+        # if int(cmpy_tax[12])==3:
+        #   inv_pro1_canvas.create_line(120, 390, 820, 390 )
+        #   inv_pro1_canvas.create_line(120, 340, 120, 365 )
+        #   inv_pro1_canvas.create_line(120, 365, 120, 390 )
+        #   inv_pro1_canvas.create_line(820, 360, 820, 565 )
+        #   inv_pro1_canvas.create_line(740, 340, 740, 565 )
+        #   inv_pro1_canvas.create_line(570, 340, 570, 565 )
+        #   inv_pro1_canvas.create_line(570, 415, 820, 415 )
+        #   inv_pro1_canvas.create_line(570, 440, 820, 440 )
+        #   inv_pro1_canvas.create_line(570, 465, 820, 465 )
+        #   inv_pro1_canvas.create_line(570, 490, 820, 490 )
+        #   inv_pro1_canvas.create_line(570, 515, 820, 515 )
+        #   inv_pro1_canvas.create_line(650, 340, 650, 390 )
+        #   inv_pro1_canvas.create_line(220, 340, 220, 390 )
+        #   inv_pro1_canvas.create_line(570, 540, 820, 540 )
+        #   inv_pro1_canvas.create_line(570, 565, 820, 565 )
+
+        #   inv_pro1_canvas.create_text(165, 372, text="PROD-0001", fill="black", font=('Helvetica 10'))
+        #   inv_pro1_canvas.create_text(370, 372, text="Example product - Description text...", fill="black", font=('Helvetica 10'))
+        #   inv_pro1_canvas.create_text(610, 372, text="1", fill="black", font=('Helvetica 10'))
+        #   inv_pro1_canvas.create_text(710, 372, text="$200.00", fill="black", font=('Helvetica 10'))
+        #   inv_pro1_canvas.create_text(790, 372, text="$200.00", fill="black", font=('Helvetica 10'))
+          
+
+        #   lbx_inv=Label(inv_pro1_canvas,text="Subtotal", bg="white",anchor="nw",font=("Helvetica 10"))
+        #   win_inv2 = inv_pro1_canvas.create_window(635, 393, anchor="nw", window=lbx_inv)
+
+        #   lbx_inv=Label(inv_pro1_canvas,text="TAX1", bg="white",anchor="nw",font=("Helvetica 10"))
+        #   win_inv2 = inv_pro1_canvas.create_window(635, 418, anchor="nw", window=lbx_inv)
+
+        #   lbx_inv=Label(inv_pro1_canvas,text="TAX2", bg="white",anchor="nw",font=("Helvetica 10"))
+        #   win_inv2 = inv_pro1_canvas.create_window(635, 443, anchor="nw", window=lbx_inv)
+
+        #   lbx_inv=Label(inv_pro1_canvas,text="Total Paid", bg="white",anchor="nw",font=("Helvetica 10 "))
+        #   win_inv2 = inv_pro1_canvas.create_window(630, 518,anchor="nw", window=lbx_inv)
+
+        #   lbx_inv=Label(inv_pro1_canvas,text="Balance", bg="white",anchor="nw",font=("Helvetica 10 "))
+        #   win_inv2 = inv_pro1_canvas.create_window(635, 543, anchor="nw", window=lbx_inv)
+          
+          
+
+        #   # inv_pro1_canvas.create_text(650, 404, text="Subtotal", fill="black", font=('Helvetica 10'))
+        #   inv_pro1_canvas.create_text(790, 404, text="$200.00", fill="black", font=('Helvetica 10'))
+
+        #   inv_pro1_canvas.create_text(792, 428, text="$18.00", fill="black", font=('Helvetica 10'))
+
+        #   inv_pro1_canvas.create_text(792, 455, text="$18.00", fill="black", font=('Helvetica 10'))
+
+        #   inv_pro1_canvas.create_text(650, 480, text="Shipping and handling", fill="black", font=('Helvetica 10'))
+        #   inv_pro1_canvas.create_text(792, 480, text="$20.00", fill="black", font=('Helvetica 10'))
+
+        #   inv_pro1_canvas.create_text(790, 505, text="$238.00", fill="black", font=('Helvetica 10 bold'))
+        #   inv_pro1_canvas.create_text(655, 505, text="Estimate total", fill="black", font=('Helvetica 10 bold'))
+
+        #   inv_pro1_canvas.create_text(790, 530, text="$100.00", fill="black", font=('Helvetica 10'))
+      
+
+        #   inv_pro1_canvas.create_text(790, 553, text="$138.00", fill="black", font=('Helvetica 10'))
+
+        # elif int(cmpy_tax[12])==2:
+        #   inv_pro1_canvas.create_line(120, 390, 820, 390 )
+        #   inv_pro1_canvas.create_line(120, 340, 120, 365 )
+        #   inv_pro1_canvas.create_line(120, 365, 120, 390 )
+        #   inv_pro1_canvas.create_line(820, 340, 820, 540 )
+        #   inv_pro1_canvas.create_line(740, 340, 740, 540 )
+        #   inv_pro1_canvas.create_line(570, 340, 570, 540 )
+        #   inv_pro1_canvas.create_line(570, 415, 820, 415 )
+        #   inv_pro1_canvas.create_line(570, 440, 820, 440 )
+        #   inv_pro1_canvas.create_line(570, 465, 820, 465 )
+        #   inv_pro1_canvas.create_line(570, 490, 820, 490 )
+        #   inv_pro1_canvas.create_line(570, 515, 820, 515 )
+        #   inv_pro1_canvas.create_line(650, 340, 650, 390 )
+        #   inv_pro1_canvas.create_line(220, 340, 220, 390 )
+        #   inv_pro1_canvas.create_line(570, 540, 820, 540 )
+
+        #   inv_pro1_canvas.create_text(165, 372, text="PROD-0001", fill="black", font=('Helvetica 10'))
+        #   inv_pro1_canvas.create_text(370, 372, text="Example product - Description text...", fill="black", font=('Helvetica 10'))
+        #   inv_pro1_canvas.create_text(610, 372, text="1", fill="black", font=('Helvetica 10'))
+        #   inv_pro1_canvas.create_text(710, 372, text="$200.00", fill="black", font=('Helvetica 10'))
+        #   inv_pro1_canvas.create_text(790, 372, text="$200.00", fill="black", font=('Helvetica 10'))
+          
+
+        #   lbx_inv=Label(inv_pro1_canvas,text="Subtotal", bg="white",anchor="nw",font=("Helvetica 10"))
+        #   win_inv2 = inv_pro1_canvas.create_window(630,392, anchor="nw", window=lbx_inv)
+
+        #   lbx_inv=Label(inv_pro1_canvas,text="TAX1", bg="white",anchor="nw",font=("Helvetica 10 "))
+        #   win_inv2 = inv_pro1_canvas.create_window(635,418, anchor="nw", window=lbx_inv)
+
+        #   lbx_inv=Label(inv_pro1_canvas,text="Total Paid", bg="red",anchor="nw",font=("Helvetica 10 "))
+        #   win_inv2 = inv_pro1_canvas.create_window(630, 492,anchor="nw", window=lbx_inv)
+
+        #   lbx_inv=Label(inv_pro1_canvas,text="Balance", bg="white",anchor="nw",font=("Helvetica 10 "))
+        #   win_inv2 = inv_pro1_canvas.create_window(635, 518, anchor="nw", window=lbx_inv)
+          
+
+        #   # inv_pro1_canvas.create_text(650, 404, text="Subtotal", fill="black", font=('Helvetica 10'))
+        #   inv_pro1_canvas.create_text(790, 404, text="$200.00", fill="black", font=('Helvetica 10'))
+
+
+        #   inv_pro1_canvas.create_text(792, 428, text="$18.00", fill="black", font=('Helvetica 10'))
+
+        #   inv_pro1_canvas.create_text(650, 454, text="Shipping and handling", fill="black", font=('Helvetica 10'))
+        #   inv_pro1_canvas.create_text(792, 454, text="$20.00", fill="black", font=('Helvetica 10'))
+
+        #   inv_pro1_canvas.create_text(790, 479, text="$238.00", fill="black", font=('Helvetica 10 bold'))
+        #   inv_pro1_canvas.create_text(650, 479, text="Estimate total", fill="black", font=('Helvetica 10 bold'))
+
+        #   inv_pro1_canvas.create_text(790, 502, text="$100.00", fill="black", font=('Helvetica 10'))
+
+
+        #   inv_pro1_canvas.create_text(790, 526, text="$138.00", fill="black", font=('Helvetica 10'))
+
+        # elif cmpy_tax[12]==1:
+        #   pass
+        
+        
 
         inv_pro1_canvas.create_text(275, 550, text="Multiline comment text goes here..", fill="black", font=('Helvetica 10'))
         inv_pro1_canvas.create_text(182, 560, text="...", fill="black", font=('Helvetica 10'))
         inv_pro1_canvas.create_text(182, 570, text="...", fill="black", font=('Helvetica 10'))
         inv_pro1_canvas.create_text(182, 580, text="...", fill="black", font=('Helvetica 10'))
         
-        inv_pro1_canvas.create_text(500, 600, text="Terms and Conditions", fill="black", font=('Helvetica 10'))
-        inv_pro1_canvas.create_line(150, 620, 795, 620)
-        
+        inv_pro1_canvas.create_text(500, 590, text=inv_lst_bx21.get(1.0,END), fill="black", font=('Helvetica 10'))#"Terms and Conditions"
+        inv_pro1_canvas.create_line(150, 600, 795, 600)
+        text=inv_txt.get('1.0',END)
+        wraped_text="\n".join(wrap(text,130))
+   
+      
+        lbx_inv=Label(inv_pro1_canvas,text=wraped_text, bg="white",anchor="nw",font=("Helvetica 8 "), justify=LEFT, height=3, width=107)
+        win_inv2 = inv_pro1_canvas.create_window(150, 603,anchor="nw", window=lbx_inv)
 
-        inv_pro1_canvas.create_text(280, 640, text= "", fill="black", font=('Helvetica 10'))
-        inv_pro1_canvas.create_text(280, 655, text="Page footer text goes here...", fill="black", font=('Helvetica 10'))
-        inv_pro1_canvas.create_text(720, 655, text="Page 1 of 1", fill="black", font=('Helvetica 10'))
+        inv_pro1_canvas.create_text(280, 660, text="Page footer text goes here...", fill="black", font=('Helvetica 10'))
+  
+
+        inv_pro1_canvas.create_text(720, 660, text="Page 1 of 1", fill="black", font=('Helvetica 10'))
       else:
         frame_pro1 = Frame(Invoice_setting_frame_cpy, width=953, height=300)
         frame_pro1.pack(expand=True, fill=BOTH)
@@ -759,33 +877,47 @@ def styl_can_def(event):
         canvas_pro2.create_text(710, 372, text="$200.00", fill="black", font=('Helvetica 10'))
         canvas_pro2.create_text(790, 372, text="$200.00", fill="black", font=('Helvetica 10'))
 
-        canvas_pro2.create_text(650, 404, text="Subtotal", fill="black", font=('Helvetica 10'))
+        lbx_inv=Label(canvas_pro2,text=inv_lst_bx14.get(1.0,END), bg="white",anchor="nw",font=("Helvetica 10"),height=1)#"Subtotal"
+        win_inv2 = canvas_pro2.create_window(630,392, anchor="nw", window=lbx_inv)
+
+        lbx_inv=Label(canvas_pro2,text=inv_lst_bx17.get(1.0,END), bg="white",anchor="nw",font=("Helvetica 10 "),height=1)#"TAX1"
+        win_inv2 = canvas_pro2.create_window(635,418, anchor="nw", window=lbx_inv)
+
+        lbx_inv=Label(canvas_pro2,text=inv_lst_bx19.get(1.0,END), bg="White",anchor="nw",font=("Helvetica 10 "), height=1)#"Total Paid"
+        win_inv2 = canvas_pro2.create_window(630, 492,anchor="nw", window=lbx_inv)
+
+        lbx_inv=Label(canvas_pro2,text=inv_lst_bx20.get(1.0,END), bg="white",anchor="nw",font=("Helvetica 10 "),height=1)#"Balance"
+        win_inv2 = canvas_pro2.create_window(635, 518, anchor="nw", window=lbx_inv)
+          
+
+       
         canvas_pro2.create_text(790, 404, text="$200.00", fill="black", font=('Helvetica 10'))
-
-        canvas_pro2.create_text(650, 428, text="TAX1", fill="black", font=('Helvetica 10'))
         canvas_pro2.create_text(792, 428, text="$18.00", fill="black", font=('Helvetica 10'))
-
         canvas_pro2.create_text(650, 454, text="Shipping and handling", fill="black", font=('Helvetica 10'))
         canvas_pro2.create_text(792, 454, text="$20.00", fill="black", font=('Helvetica 10'))
-
         canvas_pro2.create_text(790, 479, text="$238.00", fill="black", font=('Helvetica 10 bold'))
         canvas_pro2.create_text(650, 479, text="Estimate total", fill="black", font=('Helvetica 10 bold'))
-
         canvas_pro2.create_text(790, 502, text="$100.00", fill="black", font=('Helvetica 10'))
-        canvas_pro2.create_text(650, 502, text="Total Paid", fill="black", font=('Helvetica 10'))
-
         canvas_pro2.create_text(790, 526, text="$138.00", fill="black", font=('Helvetica 10'))
-        canvas_pro2.create_text(650, 526, text="Balance", fill="black", font=('Helvetica 10'))
 
         canvas_pro2.create_text(275, 550, text="Multiline comment text goes here..", fill="black", font=('Helvetica 10'))
         canvas_pro2.create_text(182, 560, text="...", fill="black", font=('Helvetica 10'))
         canvas_pro2.create_text(182, 570, text="...", fill="black", font=('Helvetica 10'))
         canvas_pro2.create_text(182, 580, text="...", fill="black", font=('Helvetica 10'))
+        
+        canvas_pro2.create_text(500, 590, text=inv_lst_bx21.get(1.0,END), fill="black", font=('Helvetica 10'))#"Terms and Conditions"
+        canvas_pro2.create_line(150, 600, 795, 600)
+        text=inv_txt.get('1.0',END)
+        wraped_text="\n".join(wrap(text,130))
+   
+      
+        lbx_inv=Label(canvas_pro2,text=wraped_text, bg="white",anchor="nw",font=("Helvetica 8 "), justify=LEFT, height=3, width=107)
+        win_inv2 = canvas_pro2.create_window(150, 603,anchor="nw", window=lbx_inv)
 
-        canvas_pro2.create_text(500, 600, text="Terms and Conditions", fill="black", font=('Helvetica 10'))
-        canvas_pro2.create_line(150, 620, 795, 620)
-        canvas_pro2.create_text(280, 655, text="Page footer text goes here...", fill="black", font=('Helvetica 10'))
-        canvas_pro2.create_text(720, 655, text="Page 1 of 1", fill="black", font=('Helvetica 10'))
+        canvas_pro2.create_text(280, 660, text="Page footer text goes here...", fill="black", font=('Helvetica 10'))
+  
+
+        canvas_pro2.create_text(720, 660, text="Page 1 of 1", fill="black", font=('Helvetica 10'))
       else:
 
         frame_inv_pro2 = Frame(Invoice_setting_frame_cpy, width=953, height=300)
@@ -992,33 +1124,47 @@ def styl_can_def(event):
         inv_smply_canvas.create_text(710, 372, text="1", fill="black", font=('Helvetica 10'))
         inv_smply_canvas.create_text(790, 372, text="$200.00", fill="black", font=('Helvetica 10'))
 
-        inv_smply_canvas.create_text(650, 404, text="Subtotal", fill="black", font=('Helvetica 10'))
+        lbx_inv=Label(inv_smply_canvas,text=inv_lst_bx14.get(1.0,END), bg="white",anchor="nw",font=("Helvetica 10"),height=1)#"Subtotal"
+        win_inv2 = inv_smply_canvas.create_window(630,392, anchor="nw", window=lbx_inv)
+
+        lbx_inv=Label(inv_smply_canvas,text=inv_lst_bx17.get(1.0,END), bg="white",anchor="nw",font=("Helvetica 10 "),height=1)#"TAX1"
+        win_inv2 = inv_smply_canvas.create_window(635,418, anchor="nw", window=lbx_inv)
+
+        lbx_inv=Label(inv_smply_canvas,text=inv_lst_bx19.get(1.0,END), bg="White",anchor="nw",font=("Helvetica 10 "), height=1)#"Total Paid"
+        win_inv2 = inv_smply_canvas.create_window(630, 492,anchor="nw", window=lbx_inv)
+
+        lbx_inv=Label(inv_smply_canvas,text=inv_lst_bx20.get(1.0,END), bg="white",anchor="nw",font=("Helvetica 10 "),height=1)#"Balance"
+        win_inv2 = inv_smply_canvas.create_window(635, 518, anchor="nw", window=lbx_inv)
+          
+
+       
         inv_smply_canvas.create_text(790, 404, text="$200.00", fill="black", font=('Helvetica 10'))
-
-        inv_smply_canvas.create_text(650, 428, text="TAX1", fill="black", font=('Helvetica 10'))
         inv_smply_canvas.create_text(792, 428, text="$18.00", fill="black", font=('Helvetica 10'))
-
         inv_smply_canvas.create_text(650, 454, text="Shipping and handling", fill="black", font=('Helvetica 10'))
         inv_smply_canvas.create_text(792, 454, text="$20.00", fill="black", font=('Helvetica 10'))
-
         inv_smply_canvas.create_text(790, 479, text="$238.00", fill="black", font=('Helvetica 10 bold'))
         inv_smply_canvas.create_text(650, 479, text="Estimate total", fill="black", font=('Helvetica 10 bold'))
-
         inv_smply_canvas.create_text(790, 502, text="$100.00", fill="black", font=('Helvetica 10'))
-        inv_smply_canvas.create_text(650, 502, text="Total Paid", fill="black", font=('Helvetica 10'))
-
         inv_smply_canvas.create_text(790, 526, text="$138.00", fill="black", font=('Helvetica 10'))
-        inv_smply_canvas.create_text(650, 526, text="Balance", fill="black", font=('Helvetica 10'))
 
         inv_smply_canvas.create_text(275, 550, text="Multiline comment text goes here..", fill="black", font=('Helvetica 10'))
         inv_smply_canvas.create_text(182, 560, text="...", fill="black", font=('Helvetica 10'))
         inv_smply_canvas.create_text(182, 570, text="...", fill="black", font=('Helvetica 10'))
         inv_smply_canvas.create_text(182, 580, text="...", fill="black", font=('Helvetica 10'))
+        
+        inv_smply_canvas.create_text(500, 590, text=inv_lst_bx21.get(1.0,END), fill="black", font=('Helvetica 10'))#"Terms and Conditions"
+        inv_smply_canvas.create_line(150, 600, 795, 600)
+        text=inv_txt.get('1.0',END)
+        wraped_text="\n".join(wrap(text,130))
+   
+      
+        lbx_inv=Label(inv_smply_canvas,text=wraped_text, bg="white",anchor="nw",font=("Helvetica 8 "), justify=LEFT, height=3, width=107)
+        win_inv2 = inv_smply_canvas.create_window(150, 603,anchor="nw", window=lbx_inv)
 
-        inv_smply_canvas.create_text(500, 600, text="Terms and Conditions", fill="black", font=('Helvetica 10'))
-        inv_smply_canvas.create_line(150, 620, 795, 620)
-        inv_smply_canvas.create_text(280, 655, text="Page footer text goes here...", fill="black", font=('Helvetica 10'))
-        inv_smply_canvas.create_text(720, 655, text="Page 1 of 1", fill="black", font=('Helvetica 10'))
+        inv_smply_canvas.create_text(280, 660, text="Page footer text goes here...", fill="black", font=('Helvetica 10'))
+  
+
+        inv_smply_canvas.create_text(720, 660, text="Page 1 of 1", fill="black", font=('Helvetica 10'))
       else:
         smply_frame = Frame(Invoice_setting_frame_cpy, width=953, height=300)
         smply_frame.pack(expand=True, fill=BOTH)
@@ -1213,33 +1359,47 @@ def styl_can_def(event):
         smply2_canvas.create_text(710, 372, text="1", fill="black", font=('Helvetica 10'))
         smply2_canvas.create_text(790, 372, text="$200.00", fill="black", font=('Helvetica 10'))
 
-        smply2_canvas.create_text(650, 404, text="Subtotal", fill="black", font=('Helvetica 10'))
+        lbx_inv=Label(smply2_canvas,text=inv_lst_bx14.get(1.0,END), bg="white",anchor="nw",font=("Helvetica 10"),height=1)#"Subtotal"
+        win_inv2 = smply2_canvas.create_window(630,392, anchor="nw", window=lbx_inv)
+
+        lbx_inv=Label(smply2_canvas,text=inv_lst_bx17.get(1.0,END), bg="white",anchor="nw",font=("Helvetica 10 "),height=1)#"TAX1"
+        win_inv2 = smply2_canvas.create_window(635,418, anchor="nw", window=lbx_inv)
+
+        lbx_inv=Label(smply2_canvas,text=inv_lst_bx19.get(1.0,END), bg="White",anchor="nw",font=("Helvetica 10 "), height=1)#"Total Paid"
+        win_inv2 = smply2_canvas.create_window(630, 492,anchor="nw", window=lbx_inv)
+
+        lbx_inv=Label(smply2_canvas,text=inv_lst_bx20.get(1.0,END), bg="white",anchor="nw",font=("Helvetica 10 "),height=1)#"Balance"
+        win_inv2 = smply2_canvas.create_window(635, 518, anchor="nw", window=lbx_inv)
+          
+
+       
         smply2_canvas.create_text(790, 404, text="$200.00", fill="black", font=('Helvetica 10'))
-
-        smply2_canvas.create_text(650, 428, text="TAX1", fill="black", font=('Helvetica 10'))
         smply2_canvas.create_text(792, 428, text="$18.00", fill="black", font=('Helvetica 10'))
-
         smply2_canvas.create_text(650, 454, text="Shipping and handling", fill="black", font=('Helvetica 10'))
         smply2_canvas.create_text(792, 454, text="$20.00", fill="black", font=('Helvetica 10'))
-
         smply2_canvas.create_text(790, 479, text="$238.00", fill="black", font=('Helvetica 10 bold'))
         smply2_canvas.create_text(650, 479, text="Estimate total", fill="black", font=('Helvetica 10 bold'))
-
         smply2_canvas.create_text(790, 502, text="$100.00", fill="black", font=('Helvetica 10'))
-        smply2_canvas.create_text(650, 502, text="Total Paid", fill="black", font=('Helvetica 10'))
-
         smply2_canvas.create_text(790, 526, text="$138.00", fill="black", font=('Helvetica 10'))
-        smply2_canvas.create_text(650, 526, text="Balance", fill="black", font=('Helvetica 10'))
 
         smply2_canvas.create_text(275, 550, text="Multiline comment text goes here..", fill="black", font=('Helvetica 10'))
         smply2_canvas.create_text(182, 560, text="...", fill="black", font=('Helvetica 10'))
         smply2_canvas.create_text(182, 570, text="...", fill="black", font=('Helvetica 10'))
         smply2_canvas.create_text(182, 580, text="...", fill="black", font=('Helvetica 10'))
+        
+        smply2_canvas.create_text(500, 590, text=inv_lst_bx21.get(1.0,END), fill="black", font=('Helvetica 10'))#"Terms and Conditions"
+        smply2_canvas.create_line(150, 600, 795, 600)
+        text=inv_txt.get('1.0',END)
+        wraped_text="\n".join(wrap(text,130))
+   
+      
+        lbx_inv=Label(inv_smply_canvas,text=wraped_text, bg="white",anchor="nw",font=("Helvetica 8 "), justify=LEFT, height=3, width=107)
+        win_inv2 = inv_smply_canvas.create_window(150, 603,anchor="nw", window=lbx_inv)
 
-        smply2_canvas.create_text(500, 600, text="Terms and Conditions", fill="black", font=('Helvetica 10'))
-        smply2_canvas.create_line(150, 620, 795, 620)
-        smply2_canvas.create_text(280, 655, text="Page footer text goes here...", fill="black", font=('Helvetica 10'))
-        smply2_canvas.create_text(720, 655, text="Page 1 of 1", fill="black", font=('Helvetica 10'))
+        inv_smply_canvas.create_text(280, 660, text="Page footer text goes here...", fill="black", font=('Helvetica 10'))
+  
+
+        inv_smply_canvas.create_text(720, 660, text="Page 1 of 1", fill="black", font=('Helvetica 10'))
       else:
         smply2_frame = Frame(Invoice_setting_frame_cpy, width=953, height=300)
         smply2_frame.pack(expand=True, fill=BOTH)
@@ -1416,10 +1576,13 @@ def styl_can_def(event):
         tree.heading("# 5", text="Price")
         
         window = bsn_canvas.create_window(120, 255, anchor="nw", window=tree)
-
+        
         bsn_canvas.create_line(120, 295, 820, 295 )
         bsn_canvas.create_line(120, 255, 120, 295 )
         bsn_canvas.create_line(320, 255, 320, 295 )
+        
+        bsn_canvas.create_line(740, 255, 740, 445 )
+        bsn_canvas.create_line(570, 255, 570, 445 )
         bsn_canvas.create_line(570, 255, 570, 295 )
         bsn_canvas.create_line(660, 255, 660, 295 )
         bsn_canvas.create_line(740, 255, 740, 295 )
@@ -1444,12 +1607,22 @@ def styl_can_def(event):
         bsn_canvas.create_text(790, 410, text="$100.00", fill="black", font=('Helvetica 10'))
         bsn_canvas.create_text(790, 435, text="$138.00", fill="black", font=('Helvetica 10'))
 
-        bsn_canvas.create_text(595, 310, text="Subtotal", fill="black", font=('Helvetica 10'))
-        bsn_canvas.create_text(585, 335, text="TAX1", fill="black", font=('Helvetica 10'))
-        bsn_canvas.create_text(635, 360, text="Shipping and handling", fill="black", font=('Helvetica 10'))
-        bsn_canvas.create_text(615, 385, text="Estimate total", fill="black", font=('Helvetica 10 bold'))
-        bsn_canvas.create_text(600, 410, text="Total Paid", fill="black", font=('Helvetica 10'))
-        bsn_canvas.create_text(595, 435, text="Balance", fill="black", font=('Helvetica 10'))
+        lbx_inv=Label(bsn_canvas,text=inv_lst_bx14.get(1.0,END), bg="white",anchor="nw",font=("Helvetica 10"),height=1)#"Subtotal"
+        win_inv2 = bsn_canvas.create_window(630,298, anchor="nw", window=lbx_inv)
+
+        lbx_inv=Label(bsn_canvas,text=inv_lst_bx17.get(1.0,END), bg="white",anchor="nw",font=("Helvetica 10 "),height=1)#"TAX1"
+        win_inv2 = bsn_canvas.create_window(635,323, anchor="nw", window=lbx_inv)
+
+        lbx_inv=Label(bsn_canvas,text=inv_lst_bx19.get(1.0,END), bg="White",anchor="nw",font=("Helvetica 10 "), height=1)#"Total Paid"
+        win_inv2 = bsn_canvas.create_window(630, 398,anchor="nw", window=lbx_inv)
+
+        lbx_inv=Label(bsn_canvas,text=inv_lst_bx20.get(1.0,END), bg="white",anchor="nw",font=("Helvetica 10 "),height=1)#"Balance"
+        win_inv2 = bsn_canvas.create_window(635, 423, anchor="nw", window=lbx_inv)
+
+    
+        bsn_canvas.create_text(655, 360, text="Shipping and handling", fill="black", font=('Helvetica 10'))
+        bsn_canvas.create_text(655, 385, text="Estimate total", fill="black", font=('Helvetica 10 bold'))
+    
 
         bsn_canvas.create_line(150, 470, 800, 470, fill='orange')
         bsn_canvas.create_text(275, 500, text="Multiline comment text goes here..", fill="black", font=('Helvetica 10'))
