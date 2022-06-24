@@ -57616,7 +57616,8 @@ def mainpage():
           lb_inv1=Label(inv_pro1_canvas,text=inv_lst_bx4.get(1.0,END), bg="white",anchor="nw",font=("Helvetica", ),height=1)#Invoice ref.#
           win_inv1 = inv_pro1_canvas.create_window(175, 220, anchor="nw", window=lb_inv1)
 
-          inv_pro1_canvas.create_text(350, 150, text="INV1/2022",justify=LEFT, fill="black", font=('Helvetica 11'))
+          lb_inv1=Label(inv_pro1_canvas,text=str(inv_tp_lf.get())+"1/2022", bg="white",anchor="nw",font=("Helvetica", ),height=1)#Invoice ref.#
+          win_inv1 = inv_pro1_canvas.create_window(310, 140, anchor="nw", window=lb_inv1)
           inv_pro1_canvas.create_text(350, 170, text=date_tdy,justify=LEFT, fill="black", font=('Helvetica 11'))
           inv_pro1_canvas.create_text(350, 190, text=date_tdy,justify=LEFT, fill="black", font=('Helvetica 11'))
           inv_pro1_canvas.create_text(340, 210, text="NET 15",justify=LEFT, fill="black", font=('Helvetica 11'))   
@@ -58105,7 +58106,8 @@ def mainpage():
 
           canvas_pro2.create_text(210, 185, text=cmpy_dtl[4],justify=LEFT, fill="black", font=('Helvetica 9'))
         
-          canvas_pro2.create_text(750,150, text="INV1/2022", fill="black", font=('Helvetica 11'))
+          lb_inv1=Label(canvas_pro2,text=str(inv_tp_lf.get())+"1/2022", bg="white",justify=LEFT,font=("Helvetica", ),height=1)#Invoice ref.#
+          win_inv1 = canvas_pro2.create_window(790, 140, anchor="ne", window=lb_inv1)
           canvas_pro2.create_text(750, 170, text=date_tdy, fill="black", font=('Helvetica 11'))
           canvas_pro2.create_text(750, 190, text=date_tdy, fill="black", font=('Helvetica 11'))
           canvas_pro2.create_text(740, 210, text="NET 15", fill="black", font=('Helvetica 11'))  
@@ -58453,7 +58455,10 @@ def mainpage():
           lb_inv1=Label(inv_smply_canvas,text=inv_lst_bx4.get(1.0,END), bg="white",anchor="nw",font=("Helvetica", ),height=1)#Invoice ref.#
           win_inv1 = inv_smply_canvas.create_window(175, 220, anchor="nw", window=lb_inv1)
 
-          inv_smply_canvas.create_text(350, 150, text="INV1/2022", fill="black", font=('Helvetica 11'))
+          win_inv1 = inv_smply_canvas.create_window(175, 220, anchor="nw", window=lb_inv1)
+
+          lb_inv1=Label(inv_smply_canvas,text=str(inv_tp_lf.get())+"1/2022", bg="white",anchor="nw",font=("Helvetica", ),height=1)
+          win_inv1 = inv_smply_canvas.create_window(310, 140, anchor="nw", window=lb_inv1)
           inv_smply_canvas.create_text(350, 170, text=date_tdy, fill="black", font=('Helvetica 11'))
           inv_smply_canvas.create_text(350, 190, text=date_tdy, fill="black", font=('Helvetica 11'))
           inv_smply_canvas.create_text(340, 210, text="NET 15", fill="black", font=('Helvetica 11'))      
@@ -58808,7 +58813,9 @@ def mainpage():
           lb_inv1=Label(smply2_canvas,text=inv_lst_bx7.get(1.0,END), bg="white",anchor="nw",font=("Helvetica 10 underline"),height=1)#Ship to
           win_inv1 = smply2_canvas.create_window(525, 250, anchor="nw", window=lb_inv1)
     
-          smply2_canvas.create_text(750, 150, text="INV1/2022", fill="black", font=('Helvetica 11'))
+          lb_inv1=Label(smply2_canvas,text=str(inv_tp_lf.get())+"1/2022", bg="white",justify=LEFT,font=("Helvetica", ),height=1)#Invoice ref.#
+          win_inv1 = smply2_canvas.create_window(790, 140, anchor="ne", window=lb_inv1)
+
           smply2_canvas.create_text(750, 170, text=date_tdy, fill="black", font=('Helvetica 11'))
           smply2_canvas.create_text(750, 190, text=date_tdy, fill="black", font=('Helvetica 11'))
           smply2_canvas.create_text(740, 210, text="NET 15", fill="black", font=('Helvetica 11'))      
@@ -59139,7 +59146,10 @@ def mainpage():
           lb_inv1=Label(bsn_canvas,text="Due Date", bg="white",anchor="ne",font=("Helvetica", 11),height=1)#Due date
           win_inv1 = bsn_canvas.create_window(575, 230, anchor="nw", window=lb_inv1)
 
-          bsn_canvas.create_text(776, 180, text="INV1/2022", fill="black", font=('Helvetica 11'))
+          lb_inv1=Label(bsn_canvas,text=str(inv_tp_lf.get())+"1/2022", bg="white",justify=LEFT,font=("Helvetica", ),height=1)#Invoice ref.#
+          win_inv1 = bsn_canvas.create_window(815, 170, anchor="ne", window=lb_inv1)
+
+          # bsn_canvas.create_text(776, 180, text="INV1/2022", fill="black", font=('Helvetica 11'))
           bsn_canvas.create_text(776, 210, text=date_tdy, fill="black", font=('Helvetica 11'))
           bsn_canvas.create_text(776, 240, text=date_tdy, fill="black", font=('Helvetica 11'))
 
@@ -59451,6 +59461,9 @@ def mainpage():
 
           lb_inv1=Label(inv_pro1_canvas,text=inv_lst_bx4.get(1.0,END), bg="white",anchor="nw",font=("Helvetica", ),height=1)#Invoice ref.#
           win_inv1 = inv_pro1_canvas.create_window(175, 220, anchor="nw", window=lb_inv1)
+
+          lb_inv1=Label(inv_pro1_canvas,text=str(inv_tp_lf.get())+"1/2022", bg="white",anchor="nw",font=("Helvetica", ),height=1)#Invoice ref.#
+          win_inv1 = inv_pro1_canvas.create_window(310, 140, anchor="nw", window=lb_inv1)
 
           inv_pro1_canvas.create_text(350, 150, text="INV1/2022",justify=LEFT, fill="black", font=('Helvetica 11'))
           inv_pro1_canvas.create_text(350, 170, text=date_tdy,justify=LEFT, fill="black", font=('Helvetica 11'))
@@ -59999,7 +60012,8 @@ def mainpage():
           # ord_pro1_canvas.create_text(200, 190, text="Due date", fill="black", font=('Helvetica 11'))
           # ord_pro1_canvas.create_text(191, 210, text="Terms", fill="black", font=('Helvetica 11'))
           # ord_pro1_canvas.create_text(205, 230, text="Order ref.#", fill="black", font=('Helvetica 11'))
-          ord_pro1_canvas.create_text(350, 150, text="ORD1/2022", fill="black", font=('Helvetica 11'))
+          lb_inv1=Label(ord_pro1_canvas,text=str(ord_lft_tp.get())+"1/2022", bg="white",anchor="nw",font=("Helvetica", ),height=1)#Invoice ref.#
+          win_inv1 = ord_pro1_canvas.create_window(310, 140, anchor="nw", window=lb_inv1)
           ord_pro1_canvas.create_text(350, 170, text=date_tdy, fill="black", font=('Helvetica 11'))
           ord_pro1_canvas.create_text(350, 190, text=date_tdy, fill="black", font=('Helvetica 11'))
           ord_pro1_canvas.create_text(340, 210, text="NET 15", fill="black", font=('Helvetica 11'))      
@@ -60369,8 +60383,10 @@ def mainpage():
           lb_inv1=Label(ord_pro2_canvas,text=inv_lst_bx7.get(1.0,END), bg="white",anchor="nw",font=("Helvetica 10 underline"),height=1)#Ship to
           win_inv1 = ord_pro2_canvas.create_window(525, 250, anchor="nw", window=lb_inv1)
 
+          lb_inv1=Label(ord_pro2_canvas,text=str(ord_lft_tp.get())+"1/2022", bg="white",justify=LEFT,font=("Helvetica", ),height=1)#Invoice ref.#
+          win_inv1 = ord_pro2_canvas.create_window(790, 140, anchor="ne", window=lb_inv1)
 
-          ord_pro2_canvas.create_text(750, 150, text="ORD1/2022", fill="black", font=('Helvetica 11'))
+          
           ord_pro2_canvas.create_text(750, 170, text=date_tdy, fill="black", font=('Helvetica 11'))
           ord_pro2_canvas.create_text(750, 190, text=date_tdy, fill="black", font=('Helvetica 11'))
           ord_pro2_canvas.create_text(740, 210, text="NET 15", fill="black", font=('Helvetica 11'))  
@@ -60711,7 +60727,9 @@ def mainpage():
         
 
         
-          ord_smply_canvas.create_text(350, 150, text="EST1/2022", fill="black", font=('Helvetica 11'))
+          lb_inv1=Label(ord_smply_canvas,text=str(ord_lft_tp.get())+"1/2022", bg="white",anchor="nw",font=("Helvetica", ),height=1)#Invoice ref.#
+          win_inv1 = ord_smply_canvas.create_window(310, 140, anchor="nw", window=lb_inv1)
+
           ord_smply_canvas.create_text(350, 170, text=date_tdy, fill="black", font=('Helvetica 11'))
           ord_smply_canvas.create_text(350, 190, text=date_tdy, fill="black", font=('Helvetica 11'))
           ord_smply_canvas.create_text(340, 210, text="NET 15", fill="black", font=('Helvetica 11'))      
@@ -61060,7 +61078,8 @@ def mainpage():
           win_inv1 = ord_smply2_canvas.create_window(525, 250, anchor="nw", window=lb_inv1)
 
 
-          ord_smply2_canvas.create_text(680, 150, text="EST1/2022", fill="black", font=('Helvetica 11'))
+          lb_inv1=Label(ord_smply2_canvas,text=str(ord_lft_tp.get())+"1/2022", bg="white",anchor="nw",font=("Helvetica", ),height=1)#Invoice ref.#
+          win_inv1 = ord_smply2_canvas.create_window(640, 140, anchor="nw", window=lb_inv1)
           ord_smply2_canvas.create_text(680, 170, text=date_tdy, fill="black", font=('Helvetica 11'))
           ord_smply2_canvas.create_text(680, 190, text=date_tdy, fill="black", font=('Helvetica 11'))
           ord_smply2_canvas.create_text(670, 210, text="NET 15", fill="black", font=('Helvetica 11'))      
@@ -61380,7 +61399,8 @@ def mainpage():
           lb_inv1=Label(ord_bs_canvas,text=ord_lft_tp4.get(1.0,END), bg="white",anchor="ne",font=("Helvetica", 11),height=1)#Due date
           win_inv1 = ord_bs_canvas.create_window(575, 230, anchor="nw", window=lb_inv1)
           
-          ord_bs_canvas.create_text(776, 180, text="ORD1/2022", fill="black", font=('Helvetica 11'))
+          lb_inv1=Label(ord_bs_canvas,text=str(ord_lft_tp.get())+"1/2022", bg="white",justify=LEFT,font=("Helvetica", ),height=1)#Invoice ref.#
+          win_inv1 = ord_bs_canvas.create_window(815, 170, anchor="ne", window=lb_inv1)
           ord_bs_canvas.create_text(776, 210, text=date_tdy, fill="black", font=('Helvetica 11'))
           ord_bs_canvas.create_text(776, 240, text=date_tdy, fill="black", font=('Helvetica 11'))
           phf = ttk.Style()
@@ -61695,7 +61715,8 @@ def mainpage():
           # ord_pro1_canvas.create_text(200, 190, text="Due date", fill="black", font=('Helvetica 11'))
           # ord_pro1_canvas.create_text(191, 210, text="Terms", fill="black", font=('Helvetica 11'))
           # ord_pro1_canvas.create_text(205, 230, text="Order ref.#", fill="black", font=('Helvetica 11'))
-          ord_pro1_canvas.create_text(350, 150, text="ORD1/2022", fill="black", font=('Helvetica 11'))
+          lb_inv1=Label(ord_pro1_canvas,text=str(ord_lft_tp.get())+"1/2022", bg="white",anchor="nw",font=("Helvetica", ),height=1)#Invoice ref.#
+          win_inv1 = ord_pro1_canvas.create_window(310, 140, anchor="nw", window=lb_inv1)
           ord_pro1_canvas.create_text(350, 170, text=date_tdy, fill="black", font=('Helvetica 11'))
           ord_pro1_canvas.create_text(350, 190, text=date_tdy, fill="black", font=('Helvetica 11'))
           ord_pro1_canvas.create_text(340, 210, text="NET 15", fill="black", font=('Helvetica 11'))      
