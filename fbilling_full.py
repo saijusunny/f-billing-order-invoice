@@ -55551,7 +55551,8 @@ def mainpage():
                             
   elif rp_date_for[0]=="dd.mm.yyyy":
         dtr='dd.mm.yyyy'
-
+  else:
+    dtr='yyyy-MM-dd'
   
                             
     # elif rp_date_for[0]=="yyyy/mm/dd":
@@ -55825,6 +55826,37 @@ def mainpage():
   global filename
   filename = ""
   def save_company():
+    #save date tab 04,03------------------------------------------------------------------------------
+    sql_03_tb='select * from invoice_settings'
+    fbcursor.execute(sql_03_tb)
+    mt_tb=fbcursor.fetchone()
+
+    if mt_tb is None:
+        
+        stt_tbl_add="INSERT INTO invoice_settings(invoice_prefix,starting_invoice_number,bgcolour,invoice,invoice2,invoice_date,order_ref,terms,invoice_to,ship_to,id_sku,product_service,quantity,	description,	unit_price,price,subtotal,discount,	discount_rate,tax1,invoice_total,total_paid,balance,	terms_conditions,	tax_exempted,page,of,terms_notes)VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)" #adding values into db
+        stt_tbl_add_val=(inv_tp_lf.get(),inv_spn_bx.get(),invset_bg_var.get(),inv_lst_bx1.get(1.0,END),inv_lst_bx2.get(1.0,END),inv_lst_bx3.get(1.0,END),inv_lst_bx4.get(1.0,END),inv_lst_bx5.get(1.0,END),inv_lst_bx6.get(1.0,END),inv_lst_bx7.get(1.0,END),inv_lst_bx8.get(1.0,END),inv_lst_bx9.get(1.0,END),inv_lst_bx10.get(1.0,END),inv_lst_bx11.get(1.0,END),inv_lst_bx12.get(1.0,END),inv_lst_bx13.get(1.0,END),inv_lst_bx14.get(1.0,END),inv_lst_bx15.get(1.0,END),inv_lst_bx16.get(1.0,END),inv_lst_bx17.get(1.0,END),inv_lst_bx18.get(1.0,END),inv_lst_bx19.get(1.0,END),inv_lst_bx20.get(1.0,END),inv_lst_bx21.get(1.0,END),inv_lst_bx22.get(1.0,END),inv_lst_bx23.get(1.0,END),inv_lst_bx24.get(1.0,END),inv_txt.get("1.0",END))
+        fbcursor.execute(stt_tbl_add,stt_tbl_add_val)
+        fbilldb.commit()
+    else:
+        stt_tbl_updt="update invoice_settings set invoice_prefix=%s,starting_invoice_number=%s,bgcolour=%s,invoice=%s,invoice2=%s,invoice_date=%s,order_ref=%s,terms=%s,invoice_to=%s,ship_to=%s,id_sku=%s,product_service=%s,quantity=%s,	description=%s,	unit_price=%s,price=%s,subtotal=%s,discount=%s,	discount_rate=%s,tax1=%s,invoice_total=%s,total_paid=%s,balance=%s,	terms_conditions=%s,tax_exempted=%s,page=%s,of=%s,terms_notes=%s" #adding values into db
+        stt_tbl_updt_val=(inv_tp_lf.get(),inv_spn_bx.get(),invset_bg_var.get(),inv_lst_bx1.get(1.0,END),inv_lst_bx2.get(1.0,END),inv_lst_bx3.get(1.0,END),inv_lst_bx4.get(1.0,END),inv_lst_bx5.get(1.0,END),inv_lst_bx6.get(1.0,END),inv_lst_bx7.get(1.0,END),inv_lst_bx8.get(1.0,END),inv_lst_bx9.get(1.0,END),inv_lst_bx10.get(1.0,END),inv_lst_bx11.get(1.0,END),inv_lst_bx12.get(1.0,END),inv_lst_bx13.get(1.0,END),inv_lst_bx14.get(1.0,END),inv_lst_bx15.get(1.0,END),inv_lst_bx16.get(1.0,END),inv_lst_bx17.get(1.0,END),inv_lst_bx18.get(1.0,END),inv_lst_bx19.get(1.0,END),inv_lst_bx20.get(1.0,END),inv_lst_bx21.get(1.0,END),inv_lst_bx22.get(1.0,END),inv_lst_bx23.get(1.0,END),inv_lst_bx24.get(1.0,END),inv_txt.get("1.0",END))
+        fbcursor.execute(stt_tbl_updt,stt_tbl_updt_val)
+        fbilldb.commit()
+    #------------------------------------------------------------------------------------------order settings
+    sq_tab4='select * from order_settings'
+    fbcursor.execute(sq_tab4)
+    mt_tb=fbcursor.fetchone()
+    if mt_tb is None:
+        stt_04_add="INSERT INTO order_settings(invoice_prefix,	starting_invoice_number,	bgcolour,	orders,	order2,order_date,	due_date,order_to,order_total,footer_note)VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)" #adding values into db
+        stt_04_add_val=(ord_lft_tp.get(),ord_spn_bx.get(),ord_man_var.get(),ord_lft_tp1.get(1.0,END),ord_lft_tp2.get(1.0,END),ord_lft_tp3.get(1.0,END),ord_lft_tp4.get(1.0,END),ord_lft_tp5.get(1.0,END),ord_lft_tp6.get(1.0,END),ord_scrl_txt.get("1.0",END))
+        fbcursor.execute(stt_04_add,stt_04_add_val)
+        fbilldb.commit()
+    else:
+        stt_04_updt="update order_settings set invoice_prefix=%s,starting_invoice_number=%s,bgcolour=%s,orders=%s,order2=%s,order_date=%s,due_date=%s,order_to=%s,order_total=%s,footer_note=%s" #adding values into db
+        stt_04_updt_val=(ord_lft_tp.get(),ord_spn_bx.get(),ord_man_var.get(),ord_lft_tp1.get(1.0,END),ord_lft_tp2.get(1.0,END),ord_lft_tp3.get(1.0,END),ord_lft_tp4.get(1.0,END),ord_lft_tp5.get(1.0,END),ord_lft_tp6.get(1.0,END),ord_scrl_txt.get("1.0",END))
+        fbcursor.execute(stt_04_updt,stt_04_updt_val)
+        fbilldb.commit()
+        
     company_name = comname.get()
     company_address = caddent.get(1.0,END)
     company_mail = comemail.get()
@@ -55888,7 +55920,7 @@ def mainpage():
     i = fbcursor.fetchall()
     if not i:
       if filename == "":
-        print(12)
+        
         sql = 'insert into company(name, address, email,salestaxno,currency,currencysign,currsignplace,  decimalseperator,excurrency,dateformat,exdate,taxtype,printimageornot,tax1name,tax1rate,printtax1,  tax2name,tax2rate,printtax2,attachment_file_type,miscellanoustab_cbutton1,miscellanoustab_cbutton2,miscellanoustab_cbutton3,miscellanoustab_cbutton4,miscellanoustab_cbutton5,miscellanoustab_cbutton6,Estimate_prefix,Customizeestimatetextlabels,Customizeestimatetextlabels1,Customizeestimatetextlabels2,Customizeestimatetextlabels3,Customizeestimatetextlabels4,Customizeestimatetextlabels5,Defaultestimatetemplate,Startingestimatenumber,Predefinedtextforestimates,adv_Selectedtemplatepreview,est_Headerboxbackgroundcolor,porder_prefix,headrebox_color,starting_porderno,text_label1,text_label2,text_label3,text_label4,text_label5,text_label6,text_label7,predefindterms_porder,email_template,text_field) values(%s,%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s,%s, %s,%s,%s,%s,%s,%s,%s,%s,%s)'
         val = (company_name,company_address,company_mail,company_salestax,currency,currencysign,  currencysign_placement,decimal_sepator,currency_example,date_format,example_dateformat,tax,printimage,  tax1name,tax1rate,printtax1,tax2name,tax2rate,printtax2,radiobut,cbut1,cbut2,cbut3,cbut4,cbut5,cbut6,est_prefix,est_text1,est_text2,est_text3,est_text4,est_text5,est_text6,est_default,est_spin1,est_predefined,adv_default,est_header,pord_prefix,pord_spin,pord_header,pord_text1,pord_text2,pord_text3,pord_text4,pord_text5,pord_text6,pord_text7,pord_predefind,combo,textfld)
         fbcursor.execute(sql, val)
@@ -55911,9 +55943,9 @@ def mainpage():
         val = (company_name,company_address,company_mail,company_salestax,currency,currencysign,  currencysign_placement,decimal_sepator,currency_example,date_format,example_dateformat,tax,printimage,  tax1name,tax1rate,printtax1,tax2name,tax2rate,printtax2,filename.split('/')[-1],radiobut,cbut1,cbut2,cbut3,cbut4,cbut5,cbut6,est_prefix,est_text1,est_text2,est_text3,est_text4,est_text5,est_text6,est_default,est_spin1,est_predefined,adv_default,est_header,pord_prefix,pord_spin,pord_header,pord_text1,pord_text2,pord_text3,pord_text4,pord_text5,pord_text6,pord_text7,pord_predefind,combo,textfld)
         fbcursor.execute(sql, val)
         fbilldb.commit()
-      
-      
-  
+    
+
+
   
   save_setting = Button(settframe,compound="top", text="Save\nSettings",relief=RAISED,    command=save_company, image=saves, font=("arial", 8),bg="#f5f3f2", fg="black", height=55, bd=1, width=55)
   save_setting.pack(side="left", pady=3, ipadx=4)
@@ -57171,24 +57203,56 @@ def mainpage():
   ver = Label(Invoice_setting_frame_cpy,text="Invoice# prefix")
   ver.place(x=5,y=20)
 
-  inv_tp_lf = Listbox(Invoice_setting_frame, height=1)
-  inv_tp_lf.insert(END, "INV")
+  sql_tb03_qry="select * from invoice_settings"
+  fbcursor.execute(sql_tb03_qry)
+  tab03_valzs=fbcursor.fetchone()
+
+  inv_tp_lf =Entry(Invoice_setting_frame)
+  if tab03_valzs is None:
+    inv_tp_lf.insert(0, "INV")
+  else:
+    inv_tp_lf.delete(0,'end')
+    inv_tp_lf.insert(END,tab03_valzs[0])
   inv_tp_lf.place(x=100,y=20)
 
   invset_ver = Label(Invoice_setting_frame_cpy,text="Starting Invoice number")
   invset_ver.place(x=25,y=50)
 
-  inv_spn_bx = Spinbox(Invoice_setting_frame_cpy,from_=1,to=1000000,width=15)
+  def spin_valss_tab03(S,d):
+    if d=='1':
+      if not S in ['.','0','1','2','3','4','5','6','7','8','9']:
+        return False
+      return True
+          
+    if d.isdigit():
+      return True
+
+
+  valdity_tab03=(Invoice_setting_frame_cpy.register(spin_valss_tab03), '%S','%d')
+  inv_spn_bx = Spinbox(Invoice_setting_frame_cpy,from_=1,to=1000000,width=15,justify=RIGHT)
+  
+  if tab03_valzs is None:
+    pass
+  else:
+    inv_spn_bx.delete(0,"end")
+    inv_spn_bx.insert(0,int(tab03_valzs[1]))
+  inv_spn_bx.config(validate='key',validatecommand=(valdity_tab03))
   inv_spn_bx.place(x=50,y=80)
 
   inv_lbl2 = Label(Invoice_setting_frame_cpy,text="Header box background color")
   inv_lbl2.place(x=5,y=100)
+  
+
 
   invset_bg_var = StringVar()
   invset_bg_list = ttk.Combobox(Invoice_setting_frame_cpy,textvariable=invset_bg_var)
-  invset_bg_list.place(x=6 ,y=120)
+  
   invset_bg_list['values'] = ('Default','Black','Maroon','Green','Olive','Navy','Purple','Teal','Gray','Silver','Red','Lime','Yellow','Blue','Fuchsia','Aqua','White','ScrollBar','Background','ActiveCaption','InactiveCaption','Menu','Window','WindowFrame','MenuText','WindowText','CaptionText','ActiveBorder','InactiveBorder','AppWorkSpace','Highlight','HighlightText','BtnFace','InactiveCaptionText','BtnHighlight','3DDkShadow','3DLight','InfoText','InfoBk','Custom')
-  invset_bg_list.current(0)
+  if tab03_valzs is None:
+    invset_bg_list.current(0)
+  else:
+    invset_bg_list.insert(0,tab03_valzs[2])
+  invset_bg_list.place(x=6 ,y=120)
 
   inv_lb22 = Label(Invoice_setting_frame_cpy,text="Customize Invoice text labels")
   inv_lb22.place(x=5,y=140)
@@ -57231,7 +57295,7 @@ def mainpage():
     inv_lst_bx17.delete(1.0,'end')
     inv_lst_bx17.insert(END, "TAX1")
     inv_lst_bx18.delete(1.0,'end')
-    inv_lst_bx18.insert(END, "TAX2")
+    inv_lst_bx18.insert(END, "Invoice Total")
     inv_lst_bx19.delete(1.0,'end')
  
     inv_lst_bx19.insert(END, "Total Paid")
@@ -57247,79 +57311,202 @@ def mainpage():
     inv_lst_bx24.insert(END, "of")
  
 
+    
   inv_lst_bx1 = Text(Invoice_setting_frame, height=1, width=25, font=('Calibri 10'))
-  inv_lst_bx1.insert(END, "Invoice")
+  if tab03_valzs is None:
+    inv_lst_bx1.insert(END, "Invoice")
+  else:
+    inv_lst_bx1.delete(1.0,"end")
+    inv_lst_bx1.insert(1.0,tab03_valzs[3])
 
   inv_lst_bx1.place(x=5,y=160)
   inv_lst_bx2 = Text(Invoice_setting_frame, height=1, width=25, font=('Calibri 10'))
-  inv_lst_bx2.insert(END, "Invoice#")
+  if tab03_valzs is None:
+    inv_lst_bx2.insert(END, "Invoice#")
+  else:
+    inv_lst_bx2.delete(1.0,"end")
+    inv_lst_bx2.insert(1.0,tab03_valzs[4])
+
+  
   inv_lst_bx2.place(x=5,y=180)
   inv_lst_bx3 = Text(Invoice_setting_frame, height=1, width=25, font=('Calibri 10'))
-  inv_lst_bx3.insert(END, "Invoice date")
+  if tab03_valzs is None:
+    inv_lst_bx3.insert(END, "Invoice date")
+  else:
+    inv_lst_bx3.delete(1.0,"end")
+    inv_lst_bx3.insert(1.0,tab03_valzs[5])
+  
   inv_lst_bx3.place(x=5,y=200)
   inv_lst_bx4 = Text(Invoice_setting_frame, height=1, width=25, font=('Calibri 10'))
-  inv_lst_bx4.insert(END, "Order ref.#")
+  if tab03_valzs is None:
+    inv_lst_bx4.insert(END, "Order ref.#")
+  else:
+    inv_lst_bx4.delete(1.0,"end")
+    inv_lst_bx4.insert(1.0,tab03_valzs[6])
+  
   inv_lst_bx4.place(x=5,y=220)
   inv_lst_bx5 = Text(Invoice_setting_frame, height=1, width=25, font=('Calibri 10'))
-  inv_lst_bx5.insert(END, "Terms")
+  if tab03_valzs is None:
+    inv_lst_bx5.insert(END, "Terms")
+  else:
+    inv_lst_bx5.delete(1.0,"end")
+    inv_lst_bx5.insert(1.0,tab03_valzs[7])
+  
   inv_lst_bx5.place(x=5,y=240)
   inv_lst_bx6 = Text(Invoice_setting_frame, height=1, width=25, font=('Calibri 10'))
-  inv_lst_bx6.insert(END, "Invoice to")
+  if tab03_valzs is None:
+    inv_lst_bx6.insert(END, "Invoice to")
+  else:
+    inv_lst_bx6.delete(1.0,"end")
+    inv_lst_bx6.insert(1.0,tab03_valzs[8])
+  
   inv_lst_bx6.place(x=5,y=260)
   inv_lst_bx7 = Text(Invoice_setting_frame, height=1, width=25, font=('Calibri 10'))
-  inv_lst_bx7.insert(END, "Ship to")
+  if tab03_valzs is None:
+    inv_lst_bx7.insert(END, "Ship to")
+  else:
+    inv_lst_bx7.delete(1.0,"end")
+    inv_lst_bx7.insert(1.0,tab03_valzs[9])
+  
   inv_lst_bx7.place(x=5,y=280)
   inv_lst_bx8 = Text(Invoice_setting_frame, height=1, width=25, font=('Calibri 10'))
-  inv_lst_bx8.insert(END, "ID/SKU")
+  if tab03_valzs is None:
+    inv_lst_bx8.insert(END, "ID/SKU")
+  else:
+    inv_lst_bx8.delete(1.0,"end")
+    inv_lst_bx8.insert(1.0,tab03_valzs[10])
+  
   inv_lst_bx8.place(x=5,y=300)
   inv_lst_bx9 = Text(Invoice_setting_frame, height=1, width=25, font=('Calibri 10'))
-  inv_lst_bx9.insert(END, "Product/Service")
+  if tab03_valzs is None:
+    inv_lst_bx9.insert(END, "Product/Service")
+  else:
+    inv_lst_bx9.delete(1.0,"end")
+    inv_lst_bx9.insert(1.0,tab03_valzs[11])
+  
   inv_lst_bx9.place(x=5,y=320)
   inv_lst_bx10 = Text(Invoice_setting_frame, height=1, width=25, font=('Calibri 10'))
-  inv_lst_bx10.insert(END, "Quantity")
+  if tab03_valzs is None:
+    inv_lst_bx10.insert(END, "Quantity")
+  else:
+    inv_lst_bx10.delete(1.0,"end")
+    inv_lst_bx10.insert(1.0,tab03_valzs[12])
+  
   inv_lst_bx10.place(x=5,y=340)
   inv_lst_bx11 = Text(Invoice_setting_frame, height=1, width=25, font=('Calibri 10'))
-  inv_lst_bx11.insert(END, "Description")
+  if tab03_valzs is None:
+    inv_lst_bx11.insert(END, "Description")
+  else:
+    inv_lst_bx11.delete(1.0,"end")
+    inv_lst_bx11.insert(1.0,tab03_valzs[13])
+  
   inv_lst_bx11.place(x=5,y=360)
   inv_lst_bx12 = Text(Invoice_setting_frame, height=1, width=25, font=('Calibri 10'))
-  inv_lst_bx12.insert(END, "Unit Price")
+  if tab03_valzs is None:
+    inv_lst_bx12.insert(END, "Unit Price")
+  else:
+    inv_lst_bx12.delete(1.0,"end")
+    inv_lst_bx12.insert(1.0,tab03_valzs[14])
+  
   inv_lst_bx12.place(x=5,y=380)
   inv_lst_bx13 = Text(Invoice_setting_frame, height=1, width=25, font=('Calibri 10'))
-  inv_lst_bx13.insert(END, "Price")
+  if tab03_valzs is None:
+    inv_lst_bx13.insert(END, "Price")
+  else:
+    inv_lst_bx13.delete(1.0,"end")
+    inv_lst_bx13.insert(1.0,tab03_valzs[15])
+  
   inv_lst_bx13.place(x=5,y=400)
   inv_lst_bx14 = Text(Invoice_setting_frame, height=1, width=25, font=('Calibri 10'))
-  inv_lst_bx14.insert(END, "Subtotal")
+  if tab03_valzs is None:
+    inv_lst_bx14.insert(END, "Subtotal")
+  else:
+    inv_lst_bx14.delete(1.0,"end")
+    inv_lst_bx14.insert(1.0,tab03_valzs[16])
+  
   inv_lst_bx14.place(x=5,y=420)
   inv_lst_bx15 = Text(Invoice_setting_frame, height=1, width=25, font=('Calibri 10'))
-  inv_lst_bx15.insert(END, "Discount")
+  if tab03_valzs is None:
+    inv_lst_bx15.insert(END, "Discount")
+  else:
+    inv_lst_bx15.delete(1.0,"end")
+    inv_lst_bx15.insert(1.0,tab03_valzs[17])
+  
   inv_lst_bx15.place(x=5,y=440)
   inv_lst_bx16 = Text(Invoice_setting_frame, height=1, width=25, font=('Calibri 10'))
-  inv_lst_bx16.insert(END, "Discount rate")
+  if tab03_valzs is None:
+    inv_lst_bx16.insert(END, "Discount rate")
+  else:
+    inv_lst_bx16.delete(1.0,"end")
+    inv_lst_bx16.insert(1.0,tab03_valzs[18])
+  
   inv_lst_bx16.place(x=5,y=460)
   inv_lst_bx17 = Text(Invoice_setting_frame, height=1, width=25, font=('Calibri 10'))
-  inv_lst_bx17.insert(END, "TAX1")
+  if tab03_valzs is None:
+    inv_lst_bx17.insert(END, "TAX1")
+  else:
+    inv_lst_bx17.delete(1.0,"end")
+    inv_lst_bx17.insert(1.0,tab03_valzs[19])
+  
   inv_lst_bx17.place(x=200,y=520)
   inv_lst_bx18 = Text(Invoice_setting_frame, height=1, width=25, font=('Calibri 10'))
-  inv_lst_bx18.insert(END, "TAX2")
+  if tab03_valzs is None:
+    inv_lst_bx18.insert(END, "Invoice Total")
+  else:
+    inv_lst_bx18.delete(1.0,"end")
+    inv_lst_bx18.insert(1.0,tab03_valzs[20])
+  
   inv_lst_bx18.place(x=400,y=520)
   inv_lst_bx19 = Text(Invoice_setting_frame, height=1, width=25, font=('Calibri 10'))
-  inv_lst_bx19.insert(END, "Total Paid")
+  if tab03_valzs is None:
+    inv_lst_bx19.insert(END, "Total Paid")
+  else:
+    inv_lst_bx19.delete(1.0,"end")
+    inv_lst_bx19.insert(1.0,tab03_valzs[21])
+  
   inv_lst_bx19.place(x=600,y=520)
   inv_lst_bx20 = Text(Invoice_setting_frame, height=1, width=25, font=('Calibri 10'))
-  inv_lst_bx20.insert(END, "Balance")
+  if tab03_valzs is None:
+    inv_lst_bx20.insert(END, "Balance")
+  else:
+    inv_lst_bx20.delete(1.0,"end")
+    inv_lst_bx20.insert(1.0,tab03_valzs[22])
+  
   inv_lst_bx20.place(x=800,y=520)
   inv_lst_bx21 = Text(Invoice_setting_frame, height=1, width=25, font=('Calibri 10'))
-  inv_lst_bx21.insert(END, "Terms and Conditions")
+  if tab03_valzs is None:
+    inv_lst_bx21.insert(END, "Terms and Conditions")
+  else:
+    inv_lst_bx21.delete(1.0,"end")
+    inv_lst_bx21.insert(1.0,tab03_valzs[23])
+  
   inv_lst_bx21.place(x=1000,y=520)
   inv_lst_bx22 = Text(Invoice_setting_frame, height=1, width=25, font=('Calibri 10'))
-  inv_lst_bx22.insert(END, "Tax Exempted")
+  if tab03_valzs is None:
+    inv_lst_bx22.insert(END, "Tax Exempted")
+  else:
+    inv_lst_bx22.delete(1.0,"end")
+    inv_lst_bx22.insert(1.0,tab03_valzs[24])
+  
   inv_lst_bx22.place(x=5,y=480)
   inv_lst_bx23 = Text(Invoice_setting_frame, height=1, width=25, font=('Calibri 10'))
-  inv_lst_bx23.insert(END, "Page")
+  if tab03_valzs is None:
+    inv_lst_bx23.insert(END, "Page")
+  else:
+    inv_lst_bx23.delete(1.0,"end")
+    inv_lst_bx23.insert(1.0,tab03_valzs[25])
+  
   inv_lst_bx23.place(x=5,y=500)
   inv_lst_bx24 = Text(Invoice_setting_frame, height=1, width=25, font=('Calibri 10'))
-  inv_lst_bx24.insert(END, "of")
+  if tab03_valzs is None:
+    inv_lst_bx24.insert(END, "of")
+  else:
+    inv_lst_bx24.delete(1.0,"end")
+    inv_lst_bx24.insert(1.0,tab03_valzs[26])
+  
   inv_lst_bx24.place(x=5,y=520)
+
+  
 
 
 
@@ -57338,7 +57525,10 @@ def mainpage():
   invset_messagelbframe.place(x=248, y=400)
 
   inv_txt = scrolledtext.ScrolledText(Invoice_setting_frame_cpy, undo=True,width=115,height=4)
-  inv_txt.insert(1.0,"Invoices are payable on receipt unless other terms, negotiated and noted on the invoice. By accepting delivery of goods, Buyer agrees to pay the invoiced cost for those goods, and agrees to be bound to these contract terms. No acceptance may vary these terms unless specifically agreed in writing by Seller.")
+  if tab03_valzs is None:
+    inv_txt.insert(1.0,"Invoices are payable on receipt unless other terms, negotiated and noted on the invoice. By accepting delivery of goods, Buyer agrees to pay the invoiced cost for those goods, and agrees to be bound to these contract terms. No acceptance may vary these terms unless specifically agreed in writing by Seller.")
+  else:
+    inv_txt.insert(1.0,tab03_valzs[27])
   inv_txt.place(x=260,y=425)
 
   inv_rst_btn = Button(Invoice_setting_frame_cpy,text="Restore defaults",command=lambda:restore_dfilt())
@@ -57367,7 +57557,7 @@ def mainpage():
           elif date_frmat[0]=="dd-mm-yyyy":
               ft_fr='%d-%m-%Y'
                       
-          elif date_frmat[0]=="yyyy.mm.dd":
+          elif date_frmat[0]=="yyy.mm.dd":
               ft_fr='%Y.%m.%d'
                           
           elif date_frmat[0]=="mm/dd/yyyy":
@@ -57379,8 +57569,8 @@ def mainpage():
           elif date_frmat[0]=="dd.mm.yyyy":
               ft_fr='%d.%m.%Y'
                                   
-          elif date_frmat[0]=="yyyy/mm/dd":
-              ft_fr='%Y/%m/%Dd'
+          elif date_frmat[0]=="yyyy/  mm/dd":
+              ft_fr='%Y/%m/%d'
 
           else:
               ft_fr='%Y-%m-%d'
@@ -57417,7 +57607,7 @@ def mainpage():
           lb_inv1=Label(inv_pro1_canvas,text=inv_lst_bx3.get(1.0,END), bg="white",anchor="nw",font=("Helvetica", 11),height=1 )#Invoicedate
           win_inv1 = inv_pro1_canvas.create_window(175, 160, anchor="nw", window=lb_inv1)
           
-          lb_inv1=Label(inv_pro1_canvas,text="Due date", bg="white",anchor="nw",font=("Helvetica", 11),height=1)#Due date
+          lb_inv1=Label(inv_pro1_canvas,text="Due Date", bg="white",anchor="nw",font=("Helvetica", 11),height=1)#Due date
           win_inv1 = inv_pro1_canvas.create_window(175, 180, anchor="nw", window=lb_inv1)
 
           lb_inv1=Label(inv_pro1_canvas,text=inv_lst_bx5.get(1.0,END), bg="white",anchor="nw",font=("Helvetica", 11),height=1)#Terms
@@ -57440,7 +57630,7 @@ def mainpage():
           
           inv_pro1_canvas.create_text(745, 185, text=cmpy_dtl[4], fill="black", font=('Helvetica 10'))
 
-          lb_inv1=Label(inv_pro1_canvas,text=inv_lst_bx1.get(1.0,END), bg="white",justify=LEFT,font=('Helvetica 14 bold'),height=2)#invoice
+          lb_inv1=Label(inv_pro1_canvas,text=inv_lst_bx1.get(1.0,END), bg="white",anchor="ne",font=('Helvetica 14 bold'),height=1)#invoice
           win_inv1 = inv_pro1_canvas.create_window(800, 200, anchor="ne", window=lb_inv1)
 
           lb_inv1=Label(inv_pro1_canvas,text=inv_lst_bx22.get(1.0,END), bg="white",justify=LEFT,font=("Helvetica 10" ),height=2)#TAX EXEMPTED
@@ -57466,10 +57656,10 @@ def mainpage():
           inv_pro1_canvas.create_text(598, 295, text="381 South Bedford Road", fill="black", font=('Helvetica 10'))
           inv_pro1_canvas.create_text(608, 310, text="Bedford Corners, NY 10549", fill="black", font=('Helvetica 10'))
           inv_pro1_canvas.create_text(568, 325, text="United States", fill="black", font=('Helvetica 10'))
-          s = ttk.Style()
-          s.configure('Treeview.Heading', background=''+ invset_bg_var.get(),State='DISABLE')
+          fgth = ttk.Style()
+          fgth.configure('mystyle101.Treeview.Heading', background=''+ invset_bg_var.get(),State='DISABLE')
 
-          tree=ttk.Treeview(inv_pro1_canvas, column=("c1", "c2","c3", "c4", "c5"), show='headings',height= 0, style='mystyle.Treeview')
+          tree=ttk.Treeview(inv_pro1_canvas, column=("c1", "c2","c3", "c4", "c5"), show='headings',height= 0, style='mystyle101.Treeview')
 
           tree.column("# 1", anchor=E, stretch=NO, width=100)
           tree.heading("# 1", text=inv_lst_bx8.get(1.0,END))#"ID/SKU"
@@ -57477,7 +57667,7 @@ def mainpage():
           tree.heading("# 2", text=inv_lst_bx9.get(1.0,END))#Product/Service - Description
           tree.column("# 3", anchor=E, stretch=NO, width=80)
           tree.heading("# 3", text=inv_lst_bx10.get(1.0,END))#"Quantity"
-          tree.column("# 4", anchor=E, stretch=NO, width=90)
+          tree.column("# 4", anchor=E, stretch=NO, width=90)  
           tree.heading("# 4", text=inv_lst_bx12.get(1.0,END))#"Unit Price"
           tree.column("# 5", anchor=E, stretch=NO, width=80)
           tree.heading("# 5", text=inv_lst_bx13.get(1.0,END))#"Price"
@@ -57568,11 +57758,14 @@ def mainpage():
           win_inv2 = inv_pro1_canvas.create_window(635, 518, anchor="nw", window=lbx_inv)
 
           
-
+          lbx_inv=Label(inv_pro1_canvas,text=inv_lst_bx18.get(1.0,END), bg="white",anchor="nw",font=("Helvetica 10 "),height=1)#Order Total"
+          win_inv2 = inv_pro1_canvas.create_window(625, 468, anchor="nw", window=lbx_inv)
+          lbx_inv=Label(inv_pro1_canvas,text=inv_lst_bx21.get(1.0,END), bg="white",anchor="n",font=("Helvetica 10 "),height=1)#"Terms and Conditions"
+          win_inv2 = inv_pro1_canvas.create_window(420, 570, anchor="nw", window=lbx_inv)
         
           inv_pro1_canvas.create_text(650, 454, text="Shipping and handling", fill="black", font=('Helvetica 10'))
 
-          inv_pro1_canvas.create_text(650, 479, text="Invoice total", fill="black", font=('Helvetica 10 bold'))
+ 
       
           # if int(cmpy_tax[12])==3:
           #   inv_pro1_canvas.create_line(120, 390, 820, 390 )
@@ -57696,7 +57889,7 @@ def mainpage():
           inv_pro1_canvas.create_text(182, 570, text="...", fill="black", font=('Helvetica 10'))
           inv_pro1_canvas.create_text(182, 580, text="...", fill="black", font=('Helvetica 10'))
           
-          inv_pro1_canvas.create_text(500, 590, text=inv_lst_bx21.get(1.0,END), fill="black", font=('Helvetica 10'))#"Terms and Conditions"
+        
           inv_pro1_canvas.create_line(150, 600, 795, 600)
           text=inv_txt.get('1.0',END)
           wraped_text="\n".join(wrap(text,130))
@@ -57844,7 +58037,7 @@ def mainpage():
           elif date_frmat[0]=="dd-mm-yyyy":
               ft_fr='%d-%m-%Y'
                       
-          elif date_frmat[0]=="yyyy.mm.dd":
+          elif date_frmat[0]=="yyy.mm.dd":
               ft_fr='%Y.%m.%d'
                           
           elif date_frmat[0]=="mm/dd/yyyy":
@@ -57856,8 +58049,8 @@ def mainpage():
           elif date_frmat[0]=="dd.mm.yyyy":
               ft_fr='%d.%m.%Y'
                                   
-          elif date_frmat[0]=="yyyy/mm/dd":
-              ft_fr='%Y/%m/%Dd'
+          elif date_frmat[0]=="yyyy/  mm/dd":
+              ft_fr='%Y/%m/%d'
 
           else:
               ft_fr='%Y-%m-%d'
@@ -57901,7 +58094,7 @@ def mainpage():
           lb_inv1=Label(canvas_pro2,text=inv_lst_bx3.get(1.0,END), bg="white",anchor="ne",font=("Helvetica", 11),height=1 )#Invoicedate
           win_inv1 = canvas_pro2.create_window(550, 160, anchor="nw", window=lb_inv1)
           
-          lb_inv1=Label(canvas_pro2,text="Due date", bg="white",anchor="nw",font=("Helvetica", 11),height=1)#Due date
+          lb_inv1=Label(canvas_pro2,text="Due Date", bg="white",anchor="nw",font=("Helvetica", 11),height=1)#Due date
           win_inv1 = canvas_pro2.create_window(550, 180, anchor="nw", window=lb_inv1)
 
           lb_inv1=Label(canvas_pro2,text=inv_lst_bx5.get(1.0,END), bg="white",anchor="ne",font=("Helvetica", 11),height=1)#Terms
@@ -57918,7 +58111,9 @@ def mainpage():
           canvas_pro2.create_text(740, 210, text="NET 15", fill="black", font=('Helvetica 11'))  
             
 
-          lb_inv1=Label(canvas_pro2,text=inv_lst_bx1.get(1.0,END), bg="white",anchor="e",font=('Helvetica 14 bold'),height=2)#invoice
+          # lb_inv1=Label(canvas_pro2,text=inv_lst_bx1.get(1.0,END), bg="white",anchor="e",font=('Helvetica 14 bold'),height=2)#invoice
+          # win_inv1 = canvas_pro2.create_window(155, 200, anchor="nw", window=lb_inv1)
+          lb_inv1=Label(canvas_pro2,text=inv_lst_bx1.get(1.0,END), bg="white",anchor="ne",font=('Helvetica 14 bold'),height=1)#invoice
           win_inv1 = canvas_pro2.create_window(155, 200, anchor="nw", window=lb_inv1)
 
 
@@ -57939,7 +58134,10 @@ def mainpage():
           canvas_pro2.create_text(608, 310, text="Bedford Corners, NY 10549", fill="black", font=('Helvetica 10'))
           canvas_pro2.create_text(568, 325, text="United States", fill="black", font=('Helvetica 10'))
 
-          tree=ttk.Treeview(canvas_pro2, column=("c1", "c2","c3", "c4", "c5"), show='headings',height= 0, style='mystyle.Treeview')
+          fgth = ttk.Style()
+          fgth.configure('mystyle102.Treeview.Heading', background=''+ invset_bg_var.get(),State='DISABLE')
+
+          tree=ttk.Treeview(canvas_pro2, column=("c1", "c2","c3", "c4", "c5"), show='headings',height= 0, style='mystyle102.Treeview')
           
           tree.column("# 1", anchor=E, stretch=NO, width=100)
           tree.heading("# 1", text=inv_lst_bx8.get(1.0,END))
@@ -58038,7 +58236,12 @@ def mainpage():
         
           canvas_pro2.create_text(650, 454, text="Shipping and handling", fill="black", font=('Helvetica 10'))
 
-          canvas_pro2.create_text(650, 479, text="Invoice total", fill="black", font=('Helvetica 10 bold'))
+          lbx_inv=Label(canvas_pro2,text=inv_lst_bx18.get(1.0,END), bg="white",anchor="nw",font=("Helvetica 10 "),height=1)#Order Total"
+          win_inv2 = canvas_pro2.create_window(625, 468, anchor="nw", window=lbx_inv)
+          lbx_inv=Label(canvas_pro2,text=inv_lst_bx21.get(1.0,END), bg="white",anchor="n",font=("Helvetica 10 "),height=1)#"Terms and Conditions"
+          win_inv2 = canvas_pro2.create_window(420, 570, anchor="nw", window=lbx_inv)
+        
+          canvas_pro2.create_text(650, 454, text="Shipping and handling", fill="black", font=('Helvetica 10'))
         
 
           canvas_pro2.create_text(275, 550, text="Multiline comment text goes here..", fill="black", font=('Helvetica 10'))
@@ -58046,7 +58249,7 @@ def mainpage():
           canvas_pro2.create_text(182, 570, text="...", fill="black", font=('Helvetica 10'))
           canvas_pro2.create_text(182, 580, text="...", fill="black", font=('Helvetica 10'))
           
-          canvas_pro2.create_text(500, 590, text=inv_lst_bx21.get(1.0,END), fill="black", font=('Helvetica 10'))#"Terms and Conditions"
+          
           canvas_pro2.create_line(150, 600, 795, 600)
           text=inv_txt.get('1.0',END)
           wraped_text="\n".join(wrap(text,130))
@@ -58191,7 +58394,7 @@ def mainpage():
           elif date_frmat[0]=="dd-mm-yyyy":
               ft_fr='%d-%m-%Y'
                       
-          elif date_frmat[0]=="yyyy.mm.dd":
+          elif date_frmat[0]=="yyy.mm.dd":
               ft_fr='%Y.%m.%d'
                           
           elif date_frmat[0]=="mm/dd/yyyy":
@@ -58203,8 +58406,8 @@ def mainpage():
           elif date_frmat[0]=="dd.mm.yyyy":
               ft_fr='%d.%m.%Y'
                                   
-          elif date_frmat[0]=="yyyy/mm/dd":
-              ft_fr='%Y/%m/%Dd'
+          elif date_frmat[0]=="yyyy/  mm/dd":
+              ft_fr='%Y/%m/%d'
 
           else:
               ft_fr='%Y-%m-%d'
@@ -58241,7 +58444,7 @@ def mainpage():
           lb_inv1=Label(inv_smply_canvas,text=inv_lst_bx3.get(1.0,END), bg="white",anchor="nw",font=("Helvetica", 11),height=1 )#Invoicedate
           win_inv1 = inv_smply_canvas.create_window(175, 160, anchor="nw", window=lb_inv1)
           
-          lb_inv1=Label(inv_smply_canvas,text="Due date", bg="white",anchor="nw",font=("Helvetica", 11),height=1)#Due date
+          lb_inv1=Label(inv_smply_canvas,text="Due Date", bg="white",anchor="nw",font=("Helvetica", 11),height=1)#Due date
           win_inv1 = inv_smply_canvas.create_window(175, 180, anchor="nw", window=lb_inv1)
 
           lb_inv1=Label(inv_smply_canvas,text=inv_lst_bx5.get(1.0,END), bg="white",anchor="nw",font=("Helvetica", 11),height=1)#Terms
@@ -58264,7 +58467,7 @@ def mainpage():
           
           inv_smply_canvas.create_text(745, 185, text=cmpy_dtl[4], fill="black", font=('Helvetica 9'))
 
-          lb_inv1=Label(inv_smply_canvas,text=inv_lst_bx1.get(1.0,END), bg="white",justify=LEFT,font=('Helvetica 14 bold'),height=2)#invoice
+          lb_inv1=Label(inv_smply_canvas,text=inv_lst_bx1.get(1.0,END), bg="white",anchor="ne",font=('Helvetica 14 bold'),height=1)#invoice
           win_inv1 = inv_smply_canvas.create_window(800, 200, anchor="ne", window=lb_inv1)
 
           
@@ -58288,8 +58491,9 @@ def mainpage():
           inv_smply_canvas.create_text(598, 295, text="381 South Bedford Road", fill="black", font=('Helvetica 10'))
           inv_smply_canvas.create_text(608, 310, text="Bedford Corners, NY 10549", fill="black", font=('Helvetica 10'))
           inv_smply_canvas.create_text(568, 325, text="United States", fill="black", font=('Helvetica 10'))
-
-          tree=ttk.Treeview(inv_smply_canvas, column=("c1", "c2","c3"), show='headings',height= 0, style='mystyle.Treeview')
+          fgth = ttk.Style()
+          fgth.configure('mystyle103.Treeview.Heading', background=''+ invset_bg_var.get(),State='DISABLE')
+          tree=ttk.Treeview(inv_smply_canvas, column=("c1", "c2","c3"), show='headings',height= 0, style='mystyle103.Treeview')
           
           tree.column("# 1", anchor=E, stretch=NO, width=530)
           tree.heading("# 1", text=inv_lst_bx9.get(1.0,END))
@@ -58383,14 +58587,17 @@ def mainpage():
         
           inv_smply_canvas.create_text(650, 454, text="Shipping and handling", fill="black", font=('Helvetica 10'))
 
-          inv_smply_canvas.create_text(650, 479, text="Invoice total", fill="black", font=('Helvetica 10 bold'))
+          lbx_inv=Label(inv_smply_canvas,text=inv_lst_bx18.get(1.0,END), bg="white",anchor="nw",font=("Helvetica 10 "),height=1)#Order Total"
+          win_inv2 = inv_smply_canvas.create_window(625, 468, anchor="nw", window=lbx_inv)
+          lbx_inv=Label(inv_smply_canvas,text=inv_lst_bx21.get(1.0,END), bg="white",anchor="n",font=("Helvetica 10 "),height=1)#"Terms and Conditions"
+          win_inv2 = inv_smply_canvas.create_window(420, 570, anchor="nw", window=lbx_inv)
 
           inv_smply_canvas.create_text(275, 550, text="Multiline comment text goes here..", fill="black", font=('Helvetica 10'))
           inv_smply_canvas.create_text(182, 560, text="...", fill="black", font=('Helvetica 10'))
           inv_smply_canvas.create_text(182, 570, text="...", fill="black", font=('Helvetica 10'))
           inv_smply_canvas.create_text(182, 580, text="...", fill="black", font=('Helvetica 10'))
           
-          inv_smply_canvas.create_text(500, 590, text=inv_lst_bx21.get(1.0,END), fill="black", font=('Helvetica 10'))#"Terms and Conditions"
+    
           inv_smply_canvas.create_line(150, 600, 795, 600)
           text=inv_txt.get('1.0',END)
           wraped_text="\n".join(wrap(text,130))
@@ -58509,7 +58716,7 @@ def mainpage():
           inv_smply_canvas.create_text(720, 655, text="Page 1 of 1", fill="black", font=('Helvetica 10'))
 
     #----------------Simplified 2 (logo on right side)------------------ 
-      elif menuvar_lst == 'Simplified 2 (logo on right side)':
+      elif menuvar_lst == 'Simplified 2 (logo on right side)': 
         if cmpy_dtl[1] is not None:
           sql='select dateformat from company'
           fbcursor.execute(sql)
@@ -58524,7 +58731,7 @@ def mainpage():
           elif date_frmat[0]=="dd-mm-yyyy":
               ft_fr='%d-%m-%Y'
                       
-          elif date_frmat[0]=="yyyy.mm.dd":
+          elif date_frmat[0]=="yyy.mm.dd":
               ft_fr='%Y.%m.%d'
                           
           elif date_frmat[0]=="mm/dd/yyyy":
@@ -58536,8 +58743,8 @@ def mainpage():
           elif date_frmat[0]=="dd.mm.yyyy":
               ft_fr='%d.%m.%Y'
                                   
-          elif date_frmat[0]=="yyyy/mm/dd":
-              ft_fr='%Y/%m/%Dd'
+          elif date_frmat[0]=="yyyy/  mm/dd":
+              ft_fr='%Y/%m/%d'
 
           else:
               ft_fr='%Y-%m-%d'
@@ -58581,7 +58788,7 @@ def mainpage():
           lb_inv1=Label(smply2_canvas,text=inv_lst_bx3.get(1.0,END), bg="white",anchor="ne",font=("Helvetica", 11),height=1 )#Invoicedate
           win_inv1 = smply2_canvas.create_window(550, 160, anchor="nw", window=lb_inv1)
           
-          lb_inv1=Label(smply2_canvas,text="Due date", bg="white",anchor="nw",font=("Helvetica", 11),height=1)#Due date
+          lb_inv1=Label(smply2_canvas,text="Due Date", bg="white",anchor="nw",font=("Helvetica", 11),height=1)#Due date
           win_inv1 = smply2_canvas.create_window(550, 180, anchor="nw", window=lb_inv1)
 
           lb_inv1=Label(smply2_canvas,text=inv_lst_bx5.get(1.0,END), bg="white",anchor="ne",font=("Helvetica", 11),height=1)#Terms
@@ -58591,7 +58798,7 @@ def mainpage():
           win_inv1 = smply2_canvas.create_window(550, 220, anchor="nw", window=lb_inv1)
 
           smply2_canvas.create_text(210, 185, text=cmpy_dtl[4],justify=LEFT, fill="black", font=('Helvetica 9'))
-          lb_inv1=Label(smply2_canvas,text=inv_lst_bx1.get(1.0,END), bg="white",anchor="e",font=('Helvetica 14 bold'),height=2)#invoice
+          lb_inv1=Label(smply2_canvas,text=inv_lst_bx1.get(1.0,END), bg="white",anchor="ne",font=('Helvetica 14 bold'),height=1)#invoice
           win_inv1 = smply2_canvas.create_window(155, 200, anchor="nw", window=lb_inv1)
 
 
@@ -58617,7 +58824,9 @@ def mainpage():
           smply2_canvas.create_text(608, 310, text="Bedford Corners, NY 10549", fill="black", font=('Helvetica 10'))
           smply2_canvas.create_text(568, 325, text="United States", fill="black", font=('Helvetica 10'))
 
-          tree=ttk.Treeview(smply2_canvas, column=("c1", "c2","c3"), show='headings',height= 0, style='mystyle.Treeview')
+          fgth = ttk.Style()
+          fgth.configure('mystyle104.Treeview.Heading', background=''+ invset_bg_var.get(),State='DISABLE')
+          tree=ttk.Treeview(smply2_canvas, column=("c1", "c2","c3"), show='headings',height= 0, style='mystyle104.Treeview')
           
           tree.column("# 1", anchor=E, stretch=NO, width=530)
           tree.heading("# 1", text=inv_lst_bx9.get(1.0,END))
@@ -58710,7 +58919,10 @@ def mainpage():
 
           smply2_canvas.create_text(650, 454, text="Shipping and handling", fill="black", font=('Helvetica 10'))
         
-          smply2_canvas.create_text(650, 479, text="Invoice total", fill="black", font=('Helvetica 10 bold'))
+          lbx_inv=Label(smply2_canvas,text=inv_lst_bx18.get(1.0,END), bg="white",anchor="nw",font=("Helvetica 10 "),height=1)#Order Total"
+          win_inv2 = smply2_canvas.create_window(625, 468, anchor="nw", window=lbx_inv)
+          lbx_inv=Label(smply2_canvas,text=inv_lst_bx21.get(1.0,END), bg="white",anchor="n",font=("Helvetica 10 "),height=1)#"Terms and Conditions"
+          win_inv2 = smply2_canvas.create_window(420, 570, anchor="nw", window=lbx_inv)
 
 
           smply2_canvas.create_text(275, 550, text="Multiline comment text goes here..", fill="black", font=('Helvetica 10'))
@@ -58718,7 +58930,7 @@ def mainpage():
           smply2_canvas.create_text(182, 570, text="...", fill="black", font=('Helvetica 10'))
           smply2_canvas.create_text(182, 580, text="...", fill="black", font=('Helvetica 10'))
           
-          smply2_canvas.create_text(500, 590, text=inv_lst_bx21.get(1.0,END), fill="black", font=('Helvetica 10'))#"Terms and Conditions"
+      
           smply2_canvas.create_line(150, 600, 795, 600)
           text=inv_txt.get('1.0',END)
           wraped_text="\n".join(wrap(text,130))
@@ -58853,7 +59065,7 @@ def mainpage():
           elif date_frmat[0]=="dd-mm-yyyy":
               ft_fr='%d-%m-%Y'
                       
-          elif date_frmat[0]=="yyyy.mm.dd":
+          elif date_frmat[0]=="yyy.mm.dd":
               ft_fr='%Y.%m.%d'
                           
           elif date_frmat[0]=="mm/dd/yyyy":
@@ -58865,8 +59077,8 @@ def mainpage():
           elif date_frmat[0]=="dd.mm.yyyy":
               ft_fr='%d.%m.%Y'
                                   
-          elif date_frmat[0]=="yyyy/mm/dd":
-              ft_fr='%Y/%m/%Dd'
+          elif date_frmat[0]=="yyyy/  mm/dd":
+              ft_fr='%Y/%m/%d'
 
           else:
               ft_fr='%Y-%m-%d'
@@ -58924,13 +59136,17 @@ def mainpage():
           lb_inv1=Label(bsn_canvas,text=inv_lst_bx3.get(1.0,END), bg="white",anchor="ne",font=("Helvetica", 11),height=1 )#Invoicedate
           win_inv1 = bsn_canvas.create_window(575, 200, anchor="nw", window=lb_inv1)
           
-          lb_inv1=Label(bsn_canvas,text="Due date", bg="white",anchor="ne",font=("Helvetica", 11),height=1)#Due date
+          lb_inv1=Label(bsn_canvas,text="Due Date", bg="white",anchor="ne",font=("Helvetica", 11),height=1)#Due date
           win_inv1 = bsn_canvas.create_window(575, 230, anchor="nw", window=lb_inv1)
 
           bsn_canvas.create_text(776, 180, text="INV1/2022", fill="black", font=('Helvetica 11'))
           bsn_canvas.create_text(776, 210, text=date_tdy, fill="black", font=('Helvetica 11'))
           bsn_canvas.create_text(776, 240, text=date_tdy, fill="black", font=('Helvetica 11'))
-          tree=ttk.Treeview(bsn_canvas, column=("c1", "c2","c3", "c4", "c5"), show='headings',height= 0, style='mystyle.Treeview')
+
+          fgth = ttk.Style()
+          fgth.configure('mystyle105.Treeview.Heading', background=''+ invset_bg_var.get(),State='DISABLE')
+
+          tree=ttk.Treeview(bsn_canvas, column=("c1", "c2","c3", "c4", "c5"), show='headings',height= 0, style='mystyle105.Treeview')
           
           tree.column("# 1", anchor=E, stretch=NO, width=200)
           tree.heading("# 1", text=inv_lst_bx9.get(1.0,END))
@@ -59030,7 +59246,10 @@ def mainpage():
 
       
           bsn_canvas.create_text(655, 360, text="Shipping and handling", fill="black", font=('Helvetica 10'))
-          bsn_canvas.create_text(655, 385, text="Invoice total", fill="black", font=('Helvetica 10 bold'))
+          lbx_inv=Label(bsn_canvas,text=inv_lst_bx18.get(1.0,END), bg="white",anchor="nw",font=("Helvetica 10 "),height=1)#Order Total"
+          win_inv2 = bsn_canvas.create_window(630, 373, anchor="nw", window=lbx_inv)
+          lbx_inv=Label(bsn_canvas,text=inv_lst_bx21.get(1.0,END), bg="white",anchor="n",font=("Helvetica 10 "),height=1)#"Terms and Conditions"
+          win_inv2 = bsn_canvas.create_window(420, 570, anchor="nw", window=lbx_inv)
       
 
           bsn_canvas.create_line(150, 470, 800, 470, fill='orange')
@@ -59040,7 +59259,7 @@ def mainpage():
           bsn_canvas.create_text(182, 530, text="...", fill="black", font=('Helvetica 10'))
           
 
-          bsn_canvas.create_text(500, 590, text=inv_lst_bx21.get(1.0,END), fill="black", font=('Helvetica 10'))#"Terms and Conditions"
+
           bsn_canvas.create_line(150, 600, 795, 600)
           text=inv_txt.get('1.0',END)
           wraped_text="\n".join(wrap(text,130))
@@ -59150,8 +59369,6 @@ def mainpage():
           bsn_canvas.create_line(150, 620, 795, 620, fill='orange')
           bsn_canvas.create_text(280, 655, text="Page footer text goes here...", fill="black", font=('Helvetica 10'))
           bsn_canvas.create_text(720, 655, text="Page 1 of 1", fill="black", font=('Helvetica 10'))
-      else:
-          pass
       
   logo_just_var = StringVar()
   inv_cn_stl = ttk.Combobox(Invoice_setting_frame_cpy,textvariable=logo_just_var)
@@ -59176,7 +59393,7 @@ def mainpage():
           elif date_frmat[0]=="dd-mm-yyyy":
               ft_fr='%d-%m-%Y'
                       
-          elif date_frmat[0]=="yyyy.mm.dd":
+          elif date_frmat[0]=="yyy.mm.dd":
               ft_fr='%Y.%m.%d'
                           
           elif date_frmat[0]=="mm/dd/yyyy":
@@ -59188,8 +59405,8 @@ def mainpage():
           elif date_frmat[0]=="dd.mm.yyyy":
               ft_fr='%d.%m.%Y'
                                   
-          elif date_frmat[0]=="yyyy/mm/dd":
-              ft_fr='%Y/%m/%Dd'
+          elif date_frmat[0]=="yyyy/  mm/dd":
+              ft_fr='%Y/%m/%d'
 
           else:
               ft_fr='%Y-%m-%d'
@@ -59249,8 +59466,12 @@ def mainpage():
           
           inv_pro1_canvas.create_text(745, 185, text=cmpy_dtl[4], fill="black", font=('Helvetica 10'))
 
-          lb_inv1=Label(inv_pro1_canvas,text=inv_lst_bx1.get(1.0,END), bg="white",anchor="e",font=('Helvetica 14 bold'),height=2)#invoice
-          win_inv1 = inv_pro1_canvas.create_window(725, 200, anchor="nw", window=lb_inv1)
+          # lb_inv1=Label(inv_pro1_canvas,text=inv_lst_bx1.get(1.0,END), bg="white",anchor="ne",font=('Helvetica 14 bold'),height=1)#invoice
+          # win_inv1 = inv_pro1_canvas.create_window(725, 200, anchor="nw", window=lb_inv1)
+
+          lb_inv1=Label(inv_pro1_canvas,text=inv_lst_bx1.get(1.0,END), bg="white",anchor="ne",font=('Helvetica 14 bold'),height=1)#invoice
+          win_inv1 = inv_pro1_canvas.create_window(800, 200, anchor="ne", window=lb_inv1)
+
 
           lb_inv1=Label(inv_pro1_canvas,text=inv_lst_bx22.get(1.0,END), bg="white",anchor="ne",font=("Helvetica 10" ),height=1)#TAX EXEMPTED
           win_inv1 = inv_pro1_canvas.create_window(705, 225, anchor="nw", window=lb_inv1)
@@ -59275,10 +59496,10 @@ def mainpage():
           inv_pro1_canvas.create_text(598, 295, text="381 South Bedford Road", fill="black", font=('Helvetica 10'))
           inv_pro1_canvas.create_text(608, 310, text="Bedford Corners, NY 10549", fill="black", font=('Helvetica 10'))
           inv_pro1_canvas.create_text(568, 325, text="United States", fill="black", font=('Helvetica 10'))
-          s = ttk.Style()
-          s.configure('Treeview.Heading', background=''+ invset_bg_var.get(),State='DISABLE')
+          fgth = ttk.Style()
+          fgth.configure('mystyle106.Treeview.Heading', background=''+ invset_bg_var.get(),State='DISABLE')
 
-          tree=ttk.Treeview(inv_pro1_canvas, column=("c1", "c2","c3", "c4", "c5"), show='headings',height= 0, style='mystyle.Treeview')
+          tree=ttk.Treeview(inv_pro1_canvas, column=("c1", "c2","c3", "c4", "c5"), show='headings',height= 0, style='mystyle106.Treeview')
 
           tree.column("# 1", anchor=E, stretch=NO, width=100)
           tree.heading("# 1", text=inv_lst_bx8.get(1.0,END))#"ID/SKU"
@@ -59378,14 +59599,19 @@ def mainpage():
           
           inv_pro1_canvas.create_text(650, 454, text="Shipping and handling", fill="black", font=('Helvetica 10'))
           
-          inv_pro1_canvas.create_text(650, 479, text="Invoice total", fill="black", font=('Helvetica 10 bold'))
+          lbx_inv=Label(inv_pro1_canvas,text=inv_lst_bx18.get(1.0,END), bg="white",anchor="nw",font=("Helvetica 10 "),height=1)#Order Total"
+          win_inv2 = inv_pro1_canvas.create_window(625, 468, anchor="nw", window=lbx_inv)
+          
         
           inv_pro1_canvas.create_text(275, 550, text="Multiline comment text goes here..", fill="black", font=('Helvetica 10'))
           inv_pro1_canvas.create_text(182, 560, text="...", fill="black", font=('Helvetica 10'))
           inv_pro1_canvas.create_text(182, 570, text="...", fill="black", font=('Helvetica 10'))
           inv_pro1_canvas.create_text(182, 580, text="...", fill="black", font=('Helvetica 10'))
           
-          inv_pro1_canvas.create_text(500, 590, text=inv_lst_bx21.get(1.0,END), fill="black", font=('Helvetica 10'))#"Terms and Conditions"
+          lbx_inv=Label(inv_pro1_canvas,text=inv_lst_bx21.get(1.0,END), bg="white",anchor="n",font=("Helvetica 10 "),height=1)#"Terms and Conditions"
+          win_inv2 = inv_pro1_canvas.create_window(420, 570, anchor="nw", window=lbx_inv)
+
+          # inv_pro1_canvas.create_text(500, 620, text=inv_lst_bx21.get(1.0,END), fill="black", font=('Helvetica 10'))#"Terms and Conditions"
           inv_pro1_canvas.create_line(150, 600, 795, 600)
           text=inv_txt.get('1.0',END)
           wraped_text="\n".join(wrap(text,130))
@@ -59526,48 +59752,136 @@ def mainpage():
   ord_ver = Label(ord_set_frm_cpy,text="Order# prefix")
   ord_ver.place(x=5,y=40)
 
-  ord_lft_tp = Listbox(ord_set_frm, height=1)
-  ord_lft_tp.insert(END, "ORD")
+  sql_ord_ist="select * from order_settings"
+  fbcursor.execute(sql_ord_ist)
+  inst_dtl_ord=fbcursor.fetchone()
+
+
+  ord_lft_tp = Entry(ord_set_frm)
+  if inst_dtl_ord is None:
+    ord_lft_tp.insert(0, "ORD")
+  else:
+    ord_lft_tp.delete(0,'end')
+    ord_lft_tp.insert(0, inst_dtl_ord[0])
+  
   ord_lft_tp.place(x=100,y=40)
 
   ordset_ver = Label(ord_set_frm_cpy,text="Starting estimate number")
   ordset_ver.place(x=25,y=80)
+  my_var_sprn= StringVar(ord_set_frm_cpy)
+  
+  
 
-  ord_spn_bx = Spinbox(ord_set_frm_cpy,from_=1,to=1000000,width=15)
+  def spin_valss(S,d):
+    if d=='1':
+      if not S in ['.','0','1','2','3','4','5','6','7','8','9']:
+        return False
+      return True
+          
+    if d.isdigit():
+      return True
+
+
+  valditysss=(ord_set_frm_cpy.register(spin_valss), '%S','%d')
+  ord_spn_bx = Spinbox(ord_set_frm_cpy,from_=1,to=1000000,width=15,justify=RIGHT)
+
+  if inst_dtl_ord is None:
+    pass
+  else:
+    ord_spn_bx.delete(0,"end")
+    ord_spn_bx.insert(0,int(inst_dtl_ord[1]))
+  ord_spn_bx.config(validate='key',validatecommand=(valditysss))
   ord_spn_bx.place(x=50,y=100)
 
   ordset_ver = Label(ord_set_frm_cpy,text="Header box background color")
   ordset_ver.place(x=5,y=140)
 
+
+
   ord_man_var = StringVar()
   ord_cmb_bx = ttk.Combobox(ord_set_frm_cpy,textvariable=ord_man_var)
-  ord_cmb_bx.place(x=6 ,y=160)
+  
   ord_cmb_bx['values'] = ('Default','Black','Maroon','Green','Olive','Navy','Purple','Teal','Gray','Silver','Red','Lime','Yellow','Blue','Fuchsia','Aqua','White','ScrollBar','Background','ActiveCaption','InactiveCaption','Menu','Window','WindowFrame','MenuText','WindowText','CaptionText','ActiveBorder','InactiveBorder','AppWorkSpace','Highlight','HighlightText','BtnFace','InactiveCaptionText','BtnHighlight','3DDkShadow','3DLight','InfoText','InfoBk','Custom')
-  ord_cmb_bx.current(0)
+  if inst_dtl_ord is None:
+    ord_cmb_bx.current(0)
+  else:
+    ord_cmb_bx.insert(0, inst_dtl_ord[2])
+  ord_cmb_bx.place(x=6 ,y=160)
+
+  
 
   ordset_ver = Label(ord_set_frm_cpy,text="Customize Estimate text labels")
   ordset_ver.place(x=5,y=190)
 
-
-
+  def rstr_ord_tab04():
+    ord_lft_tp1.delete(1.0,'end')
+    ord_lft_tp1.insert(END, "Order")
+    ord_lft_tp2.delete(1.0,'end')
+    ord_lft_tp2.insert(1.0, "Order#")
+    ord_lft_tp3.delete(1.0,'end')
+    ord_lft_tp3.insert(1.0, "Order date")
+    ord_lft_tp4.delete(1.0,'end')
+    ord_lft_tp4.insert(END, "Due date")
+    ord_lft_tp5.delete(1.0,'end')
+    ord_lft_tp5.insert(END, "Order to")
+    ord_lft_tp6.delete(1.0,'end')
+    ord_lft_tp6.insert(1.0, "Order total")
 
   ord_lft_tp1 = Text(ord_set_frm, height=1, width=25, font=('Calibri 10'))
-  ord_lft_tp1.insert(END, "Order")
+  if inst_dtl_ord is None:
+    ord_lft_tp1.delete(1.0,'end')
+    ord_lft_tp1.insert(END, "Order")
+  else:
+    ord_lft_tp1.delete(1.0,'end')
+    ord_lft_tp1.insert(1.0, inst_dtl_ord[3])
   ord_lft_tp1.place(x=5,y=220)
   ord_lft_tp2 = Text(ord_set_frm,height=1, width=25, font=('Calibri 10'))
-  ord_lft_tp2.insert(END, "Order#")
+  if inst_dtl_ord is None:
+    ord_lft_tp2.delete(1.0,'end')
+    ord_lft_tp2.insert(1.0, "Order#")
+  else:
+    ord_lft_tp2.delete(1.0,'end')
+    ord_lft_tp2.insert(1.0, inst_dtl_ord[4])
+  
   ord_lft_tp2.place(x=5,y=240)
   ord_lft_tp3 = Text(ord_set_frm,height=1, width=25, font=('Calibri 10'))
-  ord_lft_tp3.insert(END, "Order date")
+  if inst_dtl_ord is None:
+    ord_lft_tp3.delete(1.0,'end')
+    ord_lft_tp3.insert(1.0, "Order date")
+  else:
+    ord_lft_tp3.delete(1.0,'end')
+    ord_lft_tp3.insert(1.0, inst_dtl_ord[5])
+  
   ord_lft_tp3.place(x=5,y=260) 
+
+  
   ord_lft_tp4 = Text(ord_set_frm,height=1, width=25, font=('Calibri 10'))
-  ord_lft_tp4.insert(END, "Due date")
+  if inst_dtl_ord is None:
+    ord_lft_tp4.delete(1.0,'end')
+    ord_lft_tp4.insert(END, "Due date")
+  else:
+    ord_lft_tp4.delete(1.0,'end')
+    ord_lft_tp4.insert(1.0, inst_dtl_ord[6])
+
   ord_lft_tp4.place(x=5,y=280)
+  # vght=ord_lft_tp4
   ord_lft_tp5 = Text(ord_set_frm,height=1, width=25, font=('Calibri 10'))
-  ord_lft_tp5.insert(END, "Order to")
+  if inst_dtl_ord is None:
+    ord_lft_tp5.delete(1.0,'end')
+    ord_lft_tp5.insert(END, "Order to")
+  else:
+    ord_lft_tp5.delete(1.0,'end')
+    ord_lft_tp5.insert(1.0, inst_dtl_ord[7])
+  
   ord_lft_tp5.place(x=5,y=300)
-  ord_lft_tp6 = Text(ord_set_frm, height=3,width=25, font=('Calibri 10'))
-  ord_lft_tp6.insert(END, "Order total")
+  ord_lft_tp6 = Text(ord_set_frm, height=1,width=25, font=('Calibri 10'))
+  if inst_dtl_ord is None:
+    ord_lft_tp6.delete(1.0,'end')
+    ord_lft_tp6.insert(1.0, "Order total")
+  else:
+    ord_lft_tp6.delete(1.0,'end')
+    ord_lft_tp6.insert(1.0, inst_dtl_ord[8])
+  
   ord_lft_tp6.place(x=5,y=320)
 
 
@@ -59587,16 +59901,21 @@ def mainpage():
   ordset_messagelbframe.place(x=248, y=400)
 
   ord_scrl_txt = scrolledtext.ScrolledText(ord_set_frm_cpy, undo=True,width=115,height=4)
-  ord_scrl_txt.insert(1.0,"Invoices are payable on receipt unless other terms, negotiated and noted on the invoice. By accepting delivery of goods, Buyer agrees to pay the invoiced cost for those goods, and agrees to be bound to these contract terms. No acceptance may vary these terms unless specifically agreed in writing by Seller.")
+  if inst_dtl_ord is None:
+    ord_scrl_txt.insert(1.0,"Invoices are payable on receipt unless other terms, negotiated and noted on the invoice. By accepting delivery of goods, Buyer agrees to pay the invoiced cost for those goods, and agrees to be bound to these contract terms. No acceptance may vary these terms unless specifically agreed in writing by Seller.")
+  else:
+    ord_scrl_txt.insert(1.0, inst_dtl_ord[9])
+
+  
   ord_scrl_txt.place(x=260,y=425)
 
 
 
-  ordset_bttermadd = Button(ord_set_frm_cpy,text="Restore defaults")
+  ordset_bttermadd = Button(ord_set_frm_cpy,text="Restore defaults", command=lambda:rstr_ord_tab04())
   ordset_bttermadd.place(x=32,y=450)
   #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~order drop
   def ord_main_mn(event):
-      cmp_mn_var=ord_man_var.get()
+      cmp_mn_var=ord_main_var.get()
       por_sql_st='select * from company'
       fbcursor.execute(por_sql_st)
       cmpy_dtls=fbcursor.fetchone()
@@ -59616,7 +59935,7 @@ def mainpage():
           elif date_frmat[0]=="dd-mm-yyyy":
               ft_fr='%d-%m-%Y'
                       
-          elif date_frmat[0]=="yyyy.mm.dd":
+          elif date_frmat[0]=="yyy.mm.dd":
               ft_fr='%Y.%m.%d'
                           
           elif date_frmat[0]=="mm/dd/yyyy":
@@ -59628,8 +59947,8 @@ def mainpage():
           elif date_frmat[0]=="dd.mm.yyyy":
               ft_fr='%d.%m.%Y'
                                   
-          elif date_frmat[0]=="yyyy/mm/dd":
-              ft_fr='%Y/%m/%Dd'
+          elif date_frmat[0]=="yyyy/  mm/dd":
+              ft_fr='%Y/%m/%d'
 
           else:
               ft_fr='%Y-%m-%d'
@@ -59693,7 +60012,7 @@ def mainpage():
 
           
           ord_pro1_canvas.create_text(745, 185, text=cmpy_dtl[4], fill="black", font=('Helvetica 10'))
-          lb_inv1=Label(ord_pro1_canvas,text=ord_lft_tp1.get(1.0,END), bg="white",justify=LEFT,font=('Helvetica 14 bold'),height=2)#Order
+          lb_inv1=Label(ord_pro1_canvas,text=ord_lft_tp1.get(1.0,END), bg="white",anchor="ne",font=('Helvetica 14 bold'),height=1)#Order
           win_inv1 = ord_pro1_canvas.create_window(800, 200, anchor="ne", window=lb_inv1)
 
           lb_inv1=Label(ord_pro1_canvas,text=inv_lst_bx22.get(1.0,END), bg="white",justify=LEFT,font=("Helvetica 10" ),height=2)#TAX EXEMPTED
@@ -59719,10 +60038,10 @@ def mainpage():
           ord_pro1_canvas.create_text(598, 295, text="381 South Bedford Road", fill="black", font=('Helvetica 10'))
           ord_pro1_canvas.create_text(608, 310, text="Bedford Corners, NY 10549", fill="black", font=('Helvetica 10'))
           ord_pro1_canvas.create_text(568, 325, text="United States", fill="black", font=('Helvetica 10'))
-          s = ttk.Style()
-          s.configure('Treeview.Heading', background=''+ ord_man_var.get(),State='DISABLE')
+          phf = ttk.Style()
+          phf.configure('mystyle122.Treeview.Heading', background=''+ ord_man_var.get(),State='DISABLE')
 
-          tree=ttk.Treeview(ord_pro1_canvas, column=("c1", "c2","c3", "c4", "c5"), show='headings',height= 0, style='mystyle.Treeview')
+          tree=ttk.Treeview(ord_pro1_canvas, column=("c1", "c2","c3", "c4", "c5"), show='headings',height= 0, style='mystyle122.Treeview')
 
           tree.column("# 1", anchor=E, stretch=NO, width=100)
           tree.heading("# 1", text=inv_lst_bx8.get(1.0,END))
@@ -59826,7 +60145,8 @@ def mainpage():
           ord_pro1_canvas.create_text(182, 570, text="...", fill="black", font=('Helvetica 10'))
           ord_pro1_canvas.create_text(182, 580, text="...", fill="black", font=('Helvetica 10'))
           
-          ord_pro1_canvas.create_text(500, 590, text=inv_lst_bx21.get(1.0,END), fill="black", font=('Helvetica 10'))#"Terms and Conditions"
+          lbx_inv=Label(ord_pro1_canvas,text=inv_lst_bx21.get(1.0,END), bg="white",anchor="n",font=("Helvetica 10 "),height=1)#"Terms and Conditions"
+          win_inv2 = ord_pro1_canvas.create_window(420, 570, anchor="nw", window=lbx_inv)
           ord_pro1_canvas.create_line(150, 600, 795, 600)
           text=ord_scrl_txt.get('1.0',END)
           wraped_text="\n".join(wrap(text,130))
@@ -59973,7 +60293,7 @@ def mainpage():
           elif date_frmat[0]=="dd-mm-yyyy":
               ft_fr='%d-%m-%Y'
                       
-          elif date_frmat[0]=="yyyy.mm.dd":
+          elif date_frmat[0]=="yyy.mm.dd":
               ft_fr='%Y.%m.%d'
                           
           elif date_frmat[0]=="mm/dd/yyyy":
@@ -59985,8 +60305,8 @@ def mainpage():
           elif date_frmat[0]=="dd.mm.yyyy":
               ft_fr='%d.%m.%Y'
                                   
-          elif date_frmat[0]=="yyyy/mm/dd":
-              ft_fr='%Y/%m/%Dd'
+          elif date_frmat[0]=="yyyy/  mm/dd":
+              ft_fr='%Y/%m/%d'
 
           else:
               ft_fr='%Y-%m-%d'
@@ -60040,7 +60360,7 @@ def mainpage():
           lb_inv1=Label(ord_pro2_canvas,text=inv_lst_bx4.get(1.0,END), bg="white",anchor="ne",font=("Helvetica", ),height=1)#Invoice ref.#
           win_inv1 = ord_pro2_canvas.create_window(550, 220, anchor="nw", window=lb_inv1)
           
-          lb_inv1=Label(ord_pro2_canvas,text=ord_lft_tp1.get(1.0,END), bg="white",anchor="e",font=('Helvetica 14 bold'),height=2)#invoice
+          lb_inv1=Label(ord_pro2_canvas,text=ord_lft_tp1.get(1.0,END), bg="white",anchor="ne",font=('Helvetica 14 bold'),height=1)#invoice
           win_inv1 = ord_pro2_canvas.create_window(155, 200, anchor="nw", window=lb_inv1)
 
           lb_inv1=Label(ord_pro2_canvas,text=ord_lft_tp5.get(1.0,END), bg="white",anchor="nw",font=("Helvetica 10 underline" ),height=1)#Order to
@@ -60066,7 +60386,9 @@ def mainpage():
           ord_pro2_canvas.create_text(608, 310, text="Bedford Corners, NY 10549", fill="black", font=('Helvetica 10'))
           ord_pro2_canvas.create_text(568, 325, text="United States", fill="black", font=('Helvetica 10'))
 
-          tree=ttk.Treeview(ord_pro2_canvas, column=("c1", "c2","c3", "c4", "c5"), show='headings',height= 0, style='mystyle.Treeview')
+          phf = ttk.Style()
+          phf.configure('mystyle123.Treeview.Heading', background=''+ ord_man_var.get(),State='DISABLE')
+          tree=ttk.Treeview(ord_pro2_canvas, column=("c1", "c2","c3", "c4", "c5"), show='headings',height= 0, style='mystyle123.Treeview')
           
           tree.column("# 1", anchor=E, stretch=NO, width=100)
           tree.heading("# 1", text=inv_lst_bx8.get(1.0,END))
@@ -60171,7 +60493,8 @@ def mainpage():
           ord_pro2_canvas.create_text(182, 570, text="...", fill="black", font=('Helvetica 10'))
           ord_pro2_canvas.create_text(182, 580, text="...", fill="black", font=('Helvetica 10'))
           
-          ord_pro2_canvas.create_text(500, 590, text=inv_lst_bx21.get(1.0,END), fill="black", font=('Helvetica 10'))#"Terms and Conditions"
+          lbx_inv=Label(ord_pro2_canvas,text=inv_lst_bx21.get(1.0,END), bg="white",anchor="n",font=("Helvetica 10 "),height=1)#"Terms and Conditions"
+          win_inv2 = ord_pro2_canvas.create_window(420, 570, anchor="nw", window=lbx_inv)
           ord_pro2_canvas.create_line(150, 600, 795, 600)
           text=ord_scrl_txt.get('1.0',END)
           wraped_text="\n".join(wrap(text,130))
@@ -60314,7 +60637,7 @@ def mainpage():
           elif date_frmat[0]=="dd-mm-yyyy":
               ft_fr='%d-%m-%Y'
                       
-          elif date_frmat[0]=="yyyy.mm.dd":
+          elif date_frmat[0]=="yyy.mm.dd":
               ft_fr='%Y.%m.%d'
                           
           elif date_frmat[0]=="mm/dd/yyyy":
@@ -60326,8 +60649,8 @@ def mainpage():
           elif date_frmat[0]=="dd.mm.yyyy":
               ft_fr='%d.%m.%Y'
                                   
-          elif date_frmat[0]=="yyyy/mm/dd":
-              ft_fr='%Y/%m/%Dd'
+          elif date_frmat[0]=="yyyy/  mm/dd":
+              ft_fr='%Y/%m/%d'
 
           else:
               ft_fr='%Y-%m-%d'
@@ -60358,7 +60681,7 @@ def mainpage():
           except:
             ord_smply_canvas.create_text(285, 110, text="Your Company Logo", fill="black", font=('Helvetica 18 bold'))
           
-          lb_inv1=Label(ord_smply_canvas,text=ord_lft_tp1.get(1.0,END), bg="white",justify=LEFT,font=('Helvetica 14 bold'),height=2)#Order
+          lb_inv1=Label(ord_smply_canvas,text=ord_lft_tp1.get(1.0,END), bg="white",anchor="ne",font=('Helvetica 14 bold'),height=1)#Order
           win_inv1 = ord_smply_canvas.create_window(800, 200, anchor="ne", window=lb_inv1)
 
     
@@ -60378,7 +60701,7 @@ def mainpage():
           lb_inv1=Label(ord_smply_canvas,text=ord_lft_tp4.get(1.0,END), bg="white",anchor="nw",font=("Helvetica", 11),height=1)#Due date
           win_inv1 = ord_smply_canvas.create_window(175, 180, anchor="nw", window=lb_inv1)
 
-          lb_inv1=Label(ord_smply_canvas,text=inv_lst_bx5.get(1.0,END), bg="white",anchor="nw",font=("Helvetica", 11),height=1)#Terms
+          lb_inv1=Label(ord_smply_canvas,text=inv_lst_bx5.get(1.0,END), bg="white",justify=LEFT,font=("Helvetica", 11),height=2)#Terms
           win_inv1 = ord_smply_canvas.create_window(175, 200, anchor="nw", window=lb_inv1)
 
           lb_inv1=Label(ord_smply_canvas,text=inv_lst_bx4.get(1.0,END), bg="white",anchor="nw",font=("Helvetica", ),height=1)#Order ref.#
@@ -60414,8 +60737,9 @@ def mainpage():
           ord_smply_canvas.create_text(598, 295, text="381 South Bedford Road", fill="black", font=('Helvetica 10'))
           ord_smply_canvas.create_text(608, 310, text="Bedford Corners, NY 10549", fill="black", font=('Helvetica 10'))
           ord_smply_canvas.create_text(568, 325, text="United States", fill="black", font=('Helvetica 10'))
-
-          tree=ttk.Treeview(ord_smply_canvas, column=("c1", "c2","c3"), show='headings',height= 0, style='mystyle.Treeview')
+          phf = ttk.Style()
+          phf.configure('mystyle124.Treeview.Heading', background=''+ ord_man_var.get(),State='DISABLE')
+          tree=ttk.Treeview(ord_smply_canvas, column=("c1", "c2","c3"), show='headings',height= 0, style='mystyle124.Treeview')
           
           tree.column("# 1", anchor=E, stretch=NO, width=530)
           tree.heading("# 1", text=inv_lst_bx9.get(1.0,END))
@@ -60523,7 +60847,8 @@ def mainpage():
           ord_smply_canvas.create_text(182, 570, text="...", fill="black", font=('Helvetica 10'))
           ord_smply_canvas.create_text(182, 580, text="...", fill="black", font=('Helvetica 10'))
           
-          ord_smply_canvas.create_text(500, 590, text=inv_lst_bx21.get(1.0,END), fill="black", font=('Helvetica 10'))#"Terms and Conditions"
+          lbx_inv=Label(ord_smply_canvas,text=inv_lst_bx21.get(1.0,END), bg="white",anchor="n",font=("Helvetica 10 "),height=1)#"Terms and Conditions"
+          win_inv2 = ord_smply_canvas.create_window(420, 570, anchor="nw", window=lbx_inv)
           ord_smply_canvas.create_line(150, 600, 795, 600)
           text=ord_scrl_txt.get('1.0',END)
           wraped_text="\n".join(wrap(text,130))
@@ -60658,7 +60983,7 @@ def mainpage():
           elif date_frmat[0]=="dd-mm-yyyy":
               ft_fr='%d-%m-%Y'
                       
-          elif date_frmat[0]=="yyyy.mm.dd":
+          elif date_frmat[0]=="yyy.mm.dd":
               ft_fr='%Y.%m.%d'
                           
           elif date_frmat[0]=="mm/dd/yyyy":
@@ -60670,8 +60995,8 @@ def mainpage():
           elif date_frmat[0]=="dd.mm.yyyy":
               ft_fr='%d.%m.%Y'
                                   
-          elif date_frmat[0]=="yyyy/mm/dd":
-              ft_fr='%Y/%m/%Dd'
+          elif date_frmat[0]=="yyyy/  mm/dd":
+              ft_fr='%Y/%m/%d'
 
           else:
               ft_fr='%Y-%m-%d'
@@ -60725,7 +61050,7 @@ def mainpage():
           lb_inv1=Label(ord_smply2_canvas,text=inv_lst_bx4.get(1.0,END), bg="white",anchor="ne",font=("Helvetica", ),height=1)#Invoice ref.#
           win_inv1 = ord_smply2_canvas.create_window(550, 220, anchor="nw", window=lb_inv1)
           
-          lb_inv1=Label(ord_smply2_canvas,text=ord_lft_tp1.get(1.0,END), bg="white",anchor="e",font=('Helvetica 14 bold'),height=2)#invoice
+          lb_inv1=Label(ord_smply2_canvas,text=ord_lft_tp1.get(1.0,END), bg="white",anchor="ne",font=('Helvetica 14 bold'),height=1)#invoice
           win_inv1 = ord_smply2_canvas.create_window(155, 200, anchor="nw", window=lb_inv1)
 
           lb_inv1=Label(ord_smply2_canvas,text=ord_lft_tp5.get(1.0,END), bg="white",anchor="nw",font=("Helvetica 10 underline" ),height=1)#Order to
@@ -60751,7 +61076,10 @@ def mainpage():
           ord_smply2_canvas.create_text(608, 310, text="Bedford Corners, NY 10549", fill="black", font=('Helvetica 10'))
           ord_smply2_canvas.create_text(568, 325, text="United States", fill="black", font=('Helvetica 10'))
 
-          tree=ttk.Treeview(ord_smply2_canvas, column=("c1", "c2","c3"), show='headings',height= 0, style='mystyle.Treeview')
+          phf = ttk.Style()
+          phf.configure('mystyle125.Treeview.Heading', background=''+ ord_man_var.get(),State='DISABLE')
+
+          tree=ttk.Treeview(ord_smply2_canvas, column=("c1", "c2","c3"), show='headings',height= 0, style='mystyle125.Treeview')
           
           tree.column("# 1", anchor=E, stretch=NO, width=530)
           tree.heading("# 1", text=inv_lst_bx9.get(1.0,END))
@@ -60852,7 +61180,8 @@ def mainpage():
           ord_smply2_canvas.create_text(182, 570, text="...", fill="black", font=('Helvetica 10'))
           ord_smply2_canvas.create_text(182, 580, text="...", fill="black", font=('Helvetica 10'))
           
-          ord_smply2_canvas.create_text(500, 590, text=inv_lst_bx21.get(1.0,END), fill="black", font=('Helvetica 10'))#"Terms and Conditions"
+          lbx_inv=Label(ord_smply2_canvas,text=inv_lst_bx21.get(1.0,END), bg="white",anchor="n",font=("Helvetica 10 "),height=1)#"Terms and Conditions"
+          win_inv2 = ord_smply2_canvas.create_window(420, 570, anchor="nw", window=lbx_inv)
           ord_smply2_canvas.create_line(150, 600, 795, 600)
           text=ord_scrl_txt.get('1.0',END)
           wraped_text="\n".join(wrap(text,130))
@@ -60987,7 +61316,7 @@ def mainpage():
           elif date_frmat[0]=="dd-mm-yyyy":
               ft_fr='%d-%m-%Y'
                       
-          elif date_frmat[0]=="yyyy.mm.dd":
+          elif date_frmat[0]=="yyy.mm.dd":
               ft_fr='%Y.%m.%d'
                           
           elif date_frmat[0]=="mm/dd/yyyy":
@@ -60999,8 +61328,8 @@ def mainpage():
           elif date_frmat[0]=="dd.mm.yyyy":
               ft_fr='%d.%m.%Y'
                                   
-          elif date_frmat[0]=="yyyy/mm/dd":
-              ft_fr='%Y/%m/%Dd'
+          elif date_frmat[0]=="yyyy/  mm/dd":
+              ft_fr='%Y/%m/%d'
 
           else:
               ft_fr='%Y-%m-%d'
@@ -61054,7 +61383,10 @@ def mainpage():
           ord_bs_canvas.create_text(776, 180, text="ORD1/2022", fill="black", font=('Helvetica 11'))
           ord_bs_canvas.create_text(776, 210, text=date_tdy, fill="black", font=('Helvetica 11'))
           ord_bs_canvas.create_text(776, 240, text=date_tdy, fill="black", font=('Helvetica 11'))
-          tree=ttk.Treeview(ord_bs_canvas, column=("c1", "c2","c3", "c4", "c5"), show='headings',height= 0, style='mystyle.Treeview')
+          phf = ttk.Style()
+          phf.configure('mystyle126.Treeview.Heading', background=''+ ord_man_var.get(),State='DISABLE')
+          
+          tree=ttk.Treeview(ord_bs_canvas, column=("c1", "c2","c3", "c4", "c5"), show='headings',height= 0, style='mystyle126.Treeview')
           
           tree.column("# 1", anchor=E, stretch=NO, width=200)
           tree.heading("# 1", text=inv_lst_bx9.get(1.0,END))
@@ -61165,7 +61497,8 @@ def mainpage():
           ord_bs_canvas.create_text(182, 570, text="...", fill="black", font=('Helvetica 10'))
           ord_bs_canvas.create_text(182, 580, text="...", fill="black", font=('Helvetica 10'))
           
-          ord_bs_canvas.create_text(500, 590, text=inv_lst_bx21.get(1.0,END), fill="black", font=('Helvetica 10'))#"Terms and Conditions"
+          lbx_inv=Label(ord_bs_canvas,text=inv_lst_bx21.get(1.0,END), bg="white",anchor="n",font=("Helvetica 10 "),height=1)#"Terms and Conditions"
+          win_inv2 = ord_bs_canvas.create_window(420, 570, anchor="nw", window=lbx_inv)
           ord_bs_canvas.create_line(150, 600, 795, 600)
           text=ord_scrl_txt.get('1.0',END)
           wraped_text="\n".join(wrap(text,130))
@@ -61297,7 +61630,7 @@ def mainpage():
           elif date_frmat[0]=="dd-mm-yyyy":
               ft_fr='%d-%m-%Y'
                       
-          elif date_frmat[0]=="yyyy.mm.dd":
+          elif date_frmat[0]=="yyy.mm.dd":
               ft_fr='%Y.%m.%d'
                           
           elif date_frmat[0]=="mm/dd/yyyy":
@@ -61309,8 +61642,8 @@ def mainpage():
           elif date_frmat[0]=="dd.mm.yyyy":
               ft_fr='%d.%m.%Y'
                                   
-          elif date_frmat[0]=="yyyy/mm/dd":
-              ft_fr='%Y/%m/%Dd'
+          elif date_frmat[0]=="yyyy/  mm/dd":
+              ft_fr='%Y/%m/%d'
 
           else:
               ft_fr='%Y-%m-%d'
@@ -61374,8 +61707,11 @@ def mainpage():
           windowl = ord_pro1_canvas.create_window(440,110, anchor="nw", window=labelcmpl)
 
           
-          ord_pro1_canvas.create_text(745, 185, text=cmpy_dtl[4], fill="black", font=('Helvetica 10'))
-          lb_inv1=Label(ord_pro1_canvas,text=ord_lft_tp1.get(1.0,END), bg="white",justify=LEFT,font=('Helvetica 14 bold'),height=2)#Order
+          ord_pro1_canvas.create_text(745, 195, text=cmpy_dtl[4], fill="black", font=('Helvetica 10'))
+          # lb_inv1=Label(ord_pro1_canvas,text=ord_lft_tp1.get(1.0,END), bg="white",justify=LEFT,font=('Helvetica 14 bold'),height=2)#Order
+          # win_inv1 = ord_pro1_canvas.create_window(800, 250, anchor="ne", window=lb_inv1)
+
+          lb_inv1=Label(ord_pro1_canvas,text=ord_lft_tp1.get(1.0,END), bg="white",anchor="ne",font=('Helvetica 14 bold'),height=1)#invoice
           win_inv1 = ord_pro1_canvas.create_window(800, 200, anchor="ne", window=lb_inv1)
 
           lb_inv1=Label(ord_pro1_canvas,text=inv_lst_bx22.get(1.0,END), bg="white",justify=LEFT,font=("Helvetica 10" ),height=2)#TAX EXEMPTED
@@ -61401,10 +61737,10 @@ def mainpage():
           ord_pro1_canvas.create_text(598, 295, text="381 South Bedford Road", fill="black", font=('Helvetica 10'))
           ord_pro1_canvas.create_text(608, 310, text="Bedford Corners, NY 10549", fill="black", font=('Helvetica 10'))
           ord_pro1_canvas.create_text(568, 325, text="United States", fill="black", font=('Helvetica 10'))
-          s = ttk.Style()
-          s.configure('Treeview.Heading', background=''+ ord_man_var.get(),State='DISABLE')
+          phf = ttk.Style()
+          phf.configure('mystyle126.Treeview.Heading', background=''+ ord_man_var.get(),State='DISABLE')
 
-          tree=ttk.Treeview(ord_pro1_canvas, column=("c1", "c2","c3", "c4", "c5"), show='headings',height= 0, style='mystyle.Treeview')
+          tree=ttk.Treeview(ord_pro1_canvas, column=("c1", "c2","c3", "c4", "c5"), show='headings',height= 0, style='mystyle126.Treeview')
 
           tree.column("# 1", anchor=E, stretch=NO, width=100)
           tree.heading("# 1", text=inv_lst_bx8.get(1.0,END))
@@ -61515,7 +61851,9 @@ def mainpage():
           ord_pro1_canvas.create_text(182, 570, text="...", fill="black", font=('Helvetica 10'))
           ord_pro1_canvas.create_text(182, 580, text="...", fill="black", font=('Helvetica 10'))
           
-          ord_pro1_canvas.create_text(500, 590, text=inv_lst_bx21.get(1.0,END), fill="black", font=('Helvetica 10'))#"Terms and Conditions"
+          lbx_inv=Label(ord_pro1_canvas,text=inv_lst_bx21.get(1.0,END), bg="white",anchor="n",font=("Helvetica 10 "),height=1)#"Terms and Conditions"
+          win_inv2 = ord_pro1_canvas.create_window(420, 570, anchor="nw", window=lbx_inv)
+
           ord_pro1_canvas.create_line(150, 600, 795, 600)
           text=ord_scrl_txt.get('1.0',END)
           wraped_text="\n".join(wrap(text,130))
@@ -61645,8 +61983,8 @@ def mainpage():
     ord_pro1_canvas.create_text(280, 655, text="Page footer text goes here...", fill="black", font=('Helvetica 10'))
     ord_pro1_canvas.create_text(720, 655, text="Page 1 of 1", fill="black", font=('Helvetica 10'))
 
-  ord_man_var = StringVar()
-  ord_cmb_bx_mn = ttk.Combobox(ord_set_frm_cpy,textvariable=ord_man_var)
+  ord_main_var = StringVar()
+  ord_cmb_bx_mn = ttk.Combobox(ord_set_frm_cpy,textvariable=ord_main_var)
   ord_cmb_bx_mn.place(x=770 ,y=40, width=220)
   ord_cmb_bx_mn.bind("<<ComboboxSelected>>", ord_main_mn)
   ord_cmb_bx_mn["values"] = ("Professional 1 (logo on left side)","Professional 2 (logo on right side)","Simplified 1 (logo on left side)","Simplified 2 (logo on right side)","Business Classic")
